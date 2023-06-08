@@ -1,9 +1,90 @@
 package supermercado;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Supermercado {
 
     public static void main(String[] args) {
+
+        // Scanners
+        Scanner ss = new Scanner(System.in);
+        Scanner sn = new Scanner(System.in);
+
+        // Variaveis
+        int matricula, id;
+        String nome, cpf, cargo;
+        float salario, saldo;
+        boolean sair = true;
+
+        // Array list
+        ArrayList<Cliente> clientes = new ArrayList();
+        ArrayList<Funcionario> funcionarios = new ArrayList();
+        do {
+
+            // Menu principal
+            System.out.println("[1] - Cadastrar cliente");
+            System.out.println("[2] - Cadastrar funcionario");
+            System.out.println("[3] - Selecionar cliente");
+            System.out.println("[4] - Selecionar funcionario");
+            System.out.println("[5] - Sair");
+            int menu = sn.nextInt();
+            switch (menu) {
+                case 1:
+
+                    // Cadastro de clientes
+                    System.out.println("CADASTRAR CLIENTE");
+                    System.out.println("Digite seu nome: ");
+                    nome = ss.nextLine();
+                    System.out.println("Digite seu CPF: ");
+                    cpf = ss.nextLine();
+                    System.out.println("Digite seu saldo: ");
+                    saldo = sn.nextFloat();
+                    System.out.println("Digite seu ID: ");
+                    id = ss.nextInt();
+                    Cliente cliente = new Cliente(id, saldo, nome, cpf);
+                    clientes.add(cliente);
+                    break;
+                case 2:
+
+                    // Cadastro de funcionarios
+                    System.out.println("CADASTRAR FUNCIONARIO");
+                    System.out.println("Digite o nome do funcionario:");
+                    nome = ss.nextLine();
+                    System.out.println("Digite o CPF: ");
+                    cpf = ss.nextLine();
+                    System.out.println("Digite a matricula: ");
+                    matricula = sn.nextInt();
+                    System.out.println("Digite o cargo: ");
+                    cargo = ss.nextLine();
+                    System.out.println("Digite o salario do funcionario: ");
+                    salario = sn.nextInt();
+
+                    Funcionario funcionario = new Funcionario(matricula, cargo, salario, nome, cpf);
+                case 3:
+
+                    // Seleção de cliente
+                    System.out.println("Informe o nome do cliente:");
+                    nome = ss.nextLine();
+                    for(Cliente x:clientes){
+                        if(nome == x.getNome()){
+                            System.out.println(x);
+
+                        }
+                    }
+                    break;
+                case 4:
+
+                    // Seleção de funcionario
+                    break;
+                case 5:
+                    System.out.println("Fechando menu...");
+                    sair = false;
+                    break;
+                default:
+                    break;
+            }
+        } while (sair == true);
     }
-    
-    
+
 }
