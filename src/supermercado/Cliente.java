@@ -7,8 +7,8 @@ public class Cliente extends Pessoa {
     private float saldo;
 
     //Construtor
-    public Cliente(int id, float saldo, String nome, String cpf) {
-        super(nome, cpf);
+    public Cliente(int id, float saldo, String nome, String cpf, String senha) {
+        super(nome, cpf, senha);
         this.id = id;
         this.saldo = saldo;
     }
@@ -39,4 +39,5 @@ public class Cliente extends Pessoa {
         System.out.println("Saldo: " + getSaldo());
     }
 
+    
 }

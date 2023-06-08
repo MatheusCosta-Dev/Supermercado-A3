@@ -3,12 +3,13 @@ package supermercado;
 public class Pessoa implements MostrarDados {
 
     //Atributos
-    private String nome, cpf;
+    private String nome, cpf, senha;
 
     //Construtor
-    public Pessoa(String nome, String cpf) {
+    public Pessoa(String nome, String cpf, String senha) {
         this.nome = nome;
         this.cpf = cpf;
+        this.senha = senha;
     }
 
     //Geters e setters
@@ -26,6 +27,14 @@ public class Pessoa implements MostrarDados {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public String getSenha(){
+        return senha;
+    }
+
+    public void setSenha(String senha){
+        this.senha = senha;
     }
 
     //Puxando interface
