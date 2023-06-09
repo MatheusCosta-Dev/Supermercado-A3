@@ -23,6 +23,7 @@ public class Supermercado {
         do {
 
             // Menu principal
+            sair = true;
             System.out.println("[1] - Cadastrar cliente");
             System.out.println("[2] - Cadastrar funcionario");
             System.out.println("[3] - Selecionar cliente");
@@ -41,7 +42,7 @@ public class Supermercado {
                     System.out.println("Digite seu saldo: ");
                     saldo = sn.nextFloat();
                     System.out.println("Digite seu ID: ");
-                    id = ss.nextInt();
+                    id = sn.nextInt();
                     Cliente cliente = new Cliente(id, saldo, nome, cpf);
                     clientes.add(cliente);
                     break;
@@ -61,16 +62,35 @@ public class Supermercado {
                     salario = sn.nextInt();
 
                     Funcionario funcionario = new Funcionario(matricula, cargo, salario, nome, cpf);
+                    funcionarios.add(funcionario);
+                    break;
                 case 3:
 
                     // Seleção de cliente
                     System.out.println("Informe o nome do cliente:");
                     nome = ss.nextLine();
-                    for(Cliente x:clientes){
-                        if(nome == x.getNome()){
-                            System.out.println(x);
-
-                        }
+                    for (Cliente x : clientes) {
+                        do {
+                            if (nome.equals(x.getNome())) {
+                                System.out.println(x.getSaldo());
+                                sair = false;
+                            } else {
+                                System.out.println("Este nome não esta cadastrado.");
+                                System.out.println("Quer tentar novamente ? [1] - Sim / [2] - Não");
+                                int resp = sn.nextInt();
+                                switch (resp) {
+                                    case 1:
+                                        sair = false;
+                                        break;
+                                    case 2:
+                                        sair = true;
+                                        break;
+                                    default:
+                                        System.out.println("Opção invalida.");
+                                        break;
+                                }
+                            }
+                        } while (sair == true);
                     }
                     break;
                 case 4:
