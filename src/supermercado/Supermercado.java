@@ -15,7 +15,7 @@ public class Supermercado {
         int matricula, id;
         String nome, cpf, cargo;
         float salario, saldo;
-        boolean sair = true;
+        boolean sairMenuPrincipal = true;
 
         // Array list
         ArrayList<Cliente> clientes = new ArrayList();
@@ -23,7 +23,7 @@ public class Supermercado {
         do {
 
             // Menu principal
-            sair = true;
+            sairMenuPrincipal = true;
             System.out.println("[1] - Cadastrar cliente");
             System.out.println("[2] - Cadastrar funcionario");
             System.out.println("[3] - Selecionar cliente");
@@ -74,70 +74,74 @@ public class Supermercado {
                 case 3:
 
                     // Seleção de cliente
-                    System.out.println("Informe o nome do cliente:");
-                    nome = ss.nextLine();
-                    for (Cliente x : clientes) {
-                        do {
+                    boolean sairMenuCliente = true;
+                    do {
+                        System.out.println("Informe o nome do cliente:");
+                        nome = ss.nextLine();
+
+                        for (Cliente x : clientes) {
+
                             // Verificando se o cliente existe
                             if (nome.equals(x.getNome())) {
-                                System.out.println("Painel de funcionario aberto para: " + x.getNome());
-                                sair = false;
+                                System.out.println("Painel de cliente aberto para: " + x.getNome());
                             } else {
-                                System.out.println("Este nome não esta cadastrado.");
+                                System.out.println("Este cliente não esta cadastrado.");
                                 System.out.println("Quer tentar novamente ? [1] - Sim / [2] - Não");
                                 int resp = sn.nextInt();
                                 switch (resp) {
                                     case 1:
-                                        sair = false;
+                                        sairMenuCliente = true;
                                         break;
                                     case 2:
-                                        sair = true;
+                                        sairMenuCliente = false;
                                         break;
                                     default:
                                         System.out.println("Opção invalida.");
                                         break;
                                 }
                             }
-                        } while (sair == true);
-                    }
+                        }
+                    } while (sairMenuCliente == true);
                     break;
                 case 4:
                     // Seleção de funcionario
-                    System.out.println("Informe o nome do funcionario:");
-                    nome = ss.nextLine();
-                    for (Funcionario x : funcionarios) {
-                        do {
+                    boolean sairMenuFuncionario = true;
+                    do {
+                        System.out.println("Informe o nome do funcionario:");
+                        nome = ss.nextLine();
+
+                        for (Funcionario x : funcionarios) {
+
                             // Verificando se o funcionario existe
                             if (nome.equals(x.getNome())) {
                                 System.out.println("Painel de funcionario aberto para: " + x.getNome());
-                                sair = false;
                             } else {
-                                System.out.println("Este nome não esta cadastrado.");
+                                System.out.println("Este funcionario não esta cadastrado.");
                                 System.out.println("Quer tentar novamente ? [1] - Sim / [2] - Não");
                                 int resp = sn.nextInt();
                                 switch (resp) {
                                     case 1:
-                                        sair = false;
+                                        sairMenuFuncionario = true;
                                         break;
                                     case 2:
-                                        sair = true;
+                                        sairMenuFuncionario = false;
                                         break;
                                     default:
                                         System.out.println("Opção invalida.");
                                         break;
                                 }
                             }
-                        } while (sair == true);
-                    }
+                        }
+                    } while (sairMenuFuncionario == true);
                     break;
                 case 5:
                     System.out.println("Fechando menu...");
-                    sair = false;
+                    sairMenuPrincipal = false;
                     break;
                 default:
                     break;
             }
-        } while (sair == true);
+        } while (sairMenuPrincipal == true);
     }
 
 }
