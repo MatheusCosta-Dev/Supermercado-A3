@@ -43,7 +43,11 @@ public class Supermercado {
                     saldo = sn.nextFloat();
                     System.out.println("Digite seu ID: ");
                     id = sn.nextInt();
+
+                    // Criando objeto de cliente
                     Cliente cliente = new Cliente(id, saldo, nome, cpf);
+
+                    // Adicionando ao arrayList de clientes
                     clientes.add(cliente);
                     break;
                 case 2:
@@ -61,7 +65,10 @@ public class Supermercado {
                     System.out.println("Digite o salario do funcionario: ");
                     salario = sn.nextInt();
 
+                    // Criando objeto de funcionario
                     Funcionario funcionario = new Funcionario(matricula, cargo, salario, nome, cpf);
+
+                    // Adicionando ao arrayList de funcionarios
                     funcionarios.add(funcionario);
                     break;
                 case 3:
@@ -71,8 +78,9 @@ public class Supermercado {
                     nome = ss.nextLine();
                     for (Cliente x : clientes) {
                         do {
+                            // Verificando se o cliente existe
                             if (nome.equals(x.getNome())) {
-                                System.out.println(x.getSaldo());
+                                System.out.println("Painel de funcionario aberto para: " + x.getNome());
                                 sair = false;
                             } else {
                                 System.out.println("Este nome não esta cadastrado.");
@@ -94,8 +102,33 @@ public class Supermercado {
                     }
                     break;
                 case 4:
-
                     // Seleção de funcionario
+                    System.out.println("Informe o nome do funcionario:");
+                    nome = ss.nextLine();
+                    for (Funcionario x : funcionarios) {
+                        do {
+                            // Verificando se o funcionario existe
+                            if (nome.equals(x.getNome())) {
+                                System.out.println("Painel de funcionario aberto para: " + x.getNome());
+                                sair = false;
+                            } else {
+                                System.out.println("Este nome não esta cadastrado.");
+                                System.out.println("Quer tentar novamente ? [1] - Sim / [2] - Não");
+                                int resp = sn.nextInt();
+                                switch (resp) {
+                                    case 1:
+                                        sair = false;
+                                        break;
+                                    case 2:
+                                        sair = true;
+                                        break;
+                                    default:
+                                        System.out.println("Opção invalida.");
+                                        break;
+                                }
+                            }
+                        } while (sair == true);
+                    }
                     break;
                 case 5:
                     System.out.println("Fechando menu...");
