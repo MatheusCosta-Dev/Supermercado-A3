@@ -12,14 +12,16 @@ public class Supermercado {
         Scanner sn = new Scanner(System.in);
 
         // Variaveis
-        int matricula, id;
+        int matricula, id, codigo;
         String nome, cpf, cargo;
-        float salario, saldo;
+        float salario, saldo, preco;
         boolean sairMenuPrincipal = true;
 
         // Array list
         ArrayList<Cliente> clientes = new ArrayList();
         ArrayList<Funcionario> funcionarios = new ArrayList();
+        ArrayList<Produto> produtos = new ArrayList();
+
         do {
 
             // Menu principal
@@ -35,13 +37,13 @@ public class Supermercado {
 
                     // Cadastro de clientes
                     System.out.println("CADASTRAR CLIENTE");
-                    System.out.println("Digite seu nome: ");
+                    System.out.print("Digite seu nome: ");
                     nome = ss.nextLine();
-                    System.out.println("Digite seu CPF: ");
+                    System.out.print("Digite seu CPF: ");
                     cpf = ss.nextLine();
-                    System.out.println("Digite seu saldo: ");
+                    System.out.print("Digite seu saldo: R$ ");
                     saldo = sn.nextFloat();
-                    System.out.println("Digite seu ID: ");
+                    System.out.print("Digite seu ID: ");
                     id = sn.nextInt();
 
                     // Criando objeto de cliente
@@ -54,15 +56,15 @@ public class Supermercado {
 
                     // Cadastro de funcionarios
                     System.out.println("CADASTRAR FUNCIONARIO");
-                    System.out.println("Digite o nome do funcionario:");
+                    System.out.print("Digite o nome do funcionario: ");
                     nome = ss.nextLine();
-                    System.out.println("Digite o CPF: ");
+                    System.out.print("Digite o CPF: ");
                     cpf = ss.nextLine();
-                    System.out.println("Digite a matricula: ");
+                    System.out.print("Digite a matricula: ");
                     matricula = sn.nextInt();
-                    System.out.println("Digite o cargo: ");
+                    System.out.print("Digite o cargo: ");
                     cargo = ss.nextLine();
-                    System.out.println("Digite o salario do funcionario: ");
+                    System.out.print("Digite o salario do funcionario: R$");
                     salario = sn.nextInt();
 
                     // Criando objeto de funcionario
@@ -72,9 +74,17 @@ public class Supermercado {
                     funcionarios.add(funcionario);
                     break;
                 case 3:
+                    // Verificano se há clientes cadastrados
+                    if (clientes.isEmpty() == true) {
+                        System.out.println("============================");
+                        System.out.println("Nao há clientes cadastrados.");
+                        System.out.println("============================");
+                        break;
+                    }
 
                     // Seleção de cliente
                     boolean sairMenuCliente = true;
+                    boolean sairPainelCliente = true;
                     do {
                         System.out.println("Informe o nome do cliente:");
                         nome = ss.nextLine();
@@ -84,9 +94,37 @@ public class Supermercado {
                             // Verificando se o cliente existe
                             if (nome.equals(x.getNome())) {
                                 System.out.println("Painel de cliente aberto para: " + x.getNome());
+                                do {
+                                    System.out.println("====== PAINEL CLIENTE ======");
+                                    System.out.println("[1] - Mostrar dados");
+                                    System.out.println("[2] - Listar produtos");
+                                    System.out.println("[3] - Depositar saldo");
+                                    System.out.println("[4] - Fechar painel");
+                                    int resp = sn.nextInt();
+
+                                    switch (resp) {
+                                        case 1:
+                                            x.mostrarDados();
+                                            break;
+                                        case 2:
+                                            for (Produto i : produtos) {
+                                                i.mostrarProdutos();
+                                            }
+                                            break;
+                                        case 3:
+                                            x.depositarSaldo();
+                                            break;
+                                        case 4:
+                                            sairPainelCliente = false;
+                                            sairMenuCliente = false;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } while (sairPainelCliente == true);
                             } else {
-                                System.out.println("Este cliente não esta cadastrado.");
-                                System.out.println("Quer tentar novamente ? [1] - Sim / [2] - Não");
+                                System.out.println(nome + " nao esta cadastrado como cliente.");
+                                System.out.println("Quer tentar novamente ? [1] - Sim / [2] - Nao");
                                 int resp = sn.nextInt();
                                 switch (resp) {
                                     case 1:
@@ -96,7 +134,7 @@ public class Supermercado {
                                         sairMenuCliente = false;
                                         break;
                                     default:
-                                        System.out.println("Opção invalida.");
+                                        System.out.println("Opçao invalida.");
                                         break;
                                 }
                             }
@@ -104,7 +142,16 @@ public class Supermercado {
                     } while (sairMenuCliente == true);
                     break;
                 case 4:
+                    // Verificano se há funcionarios cadastrados
+                    if (funcionarios.isEmpty() == true) {
+                        System.out.println("================================");
+                        System.out.println("Nao há funcionarios cadastrados.");
+                        System.out.println("================================");
+                        break;
+                    }
+
                     // Seleção de funcionario
+                    boolean sairPainelFuncionario = true;
                     boolean sairMenuFuncionario = true;
                     do {
                         System.out.println("Informe o nome do funcionario:");
@@ -115,6 +162,41 @@ public class Supermercado {
                             // Verificando se o funcionario existe
                             if (nome.equals(x.getNome())) {
                                 System.out.println("Painel de funcionario aberto para: " + x.getNome());
+                                do {
+                                    System.out.println("====== PAINEL FUNCIONARIO ======");
+                                    System.out.println("[1] - Mostrar dados");
+                                    System.out.println("[2] - Cadastrar produtos");
+                                    System.out.println("[3] - Fechar painel");
+                                    int resp = sn.nextInt();
+                                    switch (resp) {
+                                        case 1:
+                                            x.mostrarDados();
+                                            break;
+                                        case 2:
+                                            // Cadastro de produtos
+                                            System.out.print("Digite o nome do produto: ");
+                                            nome = ss.nextLine();
+                                            System.out.print("Digite o código do produto: ");
+                                            codigo = sn.nextInt();
+                                            System.out.print("Digite o preço do produto: R$");
+                                            preco = sn.nextInt();
+
+                                            // Criando objeto de produto
+                                            Produto produto = new Produto(nome, codigo, preco);
+
+                                            // Adicionando ao ArrayList de produtos
+                                            produtos.add(produto);
+                                            break;
+                                        case 3:
+                                            sairPainelFuncionario = false;
+                                            sairMenuFuncionario = false;
+                                            break;
+                                        default:
+                                            System.out.println("Opçao invalida tente novamente.");
+                                            break;
+                                    }
+
+                                } while (sairPainelFuncionario == true);
                             } else {
                                 System.out.println("Este funcionario não esta cadastrado.");
                                 System.out.println("Quer tentar novamente ? [1] - Sim / [2] - Não");
@@ -135,7 +217,7 @@ public class Supermercado {
                     } while (sairMenuFuncionario == true);
                     break;
                 case 5:
-                    System.out.println("Fechando menu...");
+                    System.out.println("Fechando supermercado...");
                     sairMenuPrincipal = false;
                     break;
                 default:
