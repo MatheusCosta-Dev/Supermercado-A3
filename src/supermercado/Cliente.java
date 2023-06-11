@@ -6,18 +6,18 @@ public class Cliente extends Pessoa {
     Scanner sn = new Scanner(System.in);
     Scanner ss = new Scanner(System.in);
 
-    //Atributos
+    // Atributos
     private int id;
     private float saldo;
 
-    //Construtor
+    // Construtor
     public Cliente(int id, float saldo, String nome, String cpf) {
         super(nome, cpf);
         this.id = id;
         this.saldo = saldo;
     }
 
-    //Getters e Seters
+    // Getters e Seters
     public int getId() {
         return id;
     }
@@ -34,7 +34,7 @@ public class Cliente extends Pessoa {
         this.saldo = saldo;
     }
 
-    //Método herança
+    // Método herança
     @Override
     public void mostrarDados() {
         System.out.println("===== Dados =====");
@@ -43,14 +43,14 @@ public class Cliente extends Pessoa {
         System.out.println("ID: " + getId());
         System.out.println("Saldo: R$" + getSaldo());
         System.out.println("=================");
-        
+
     }
 
     public void depositarSaldo() {
         System.out.print("Quanto você quer depositar ? R$");
         float saldo = sn.nextFloat();
         setSaldo(getSaldo() + saldo);
-        
+
     }
 
 }
