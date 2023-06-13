@@ -1,14 +1,20 @@
 package supermercado;
 
-public class Funcionario extends Pessoa {
+import java.util.ArrayList;
+import java.util.Scanner;
 
-    //Atributos
+public class Funcionario extends Pessoa {
+    //Scanners
+    Scanner ss = new Scanner(System.in);
+    Scanner sn = new Scanner(System.in);
+
+    // Atributos
     private String cargo;
     private int matricula;
     private float salario;
     private Produto produto;
 
-    //Geters e setters
+    // Geters e setters
 
     public int getMatricula() {
         return matricula;
@@ -42,7 +48,7 @@ public class Funcionario extends Pessoa {
         this.produto = produto;
     }
 
-    //Construtor
+    // Construtor
 
     public Funcionario(int matricula, String cargo, float salario, String nome, String cpf, String senha) {
         super(nome, cpf, senha);
@@ -62,4 +68,5 @@ public class Funcionario extends Pessoa {
         System.out.println("Cargo: " + getCargo());
         System.out.println("Salario: " + getSalario());
     }
+
 }

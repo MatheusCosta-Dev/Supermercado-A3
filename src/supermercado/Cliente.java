@@ -1,19 +1,23 @@
 package supermercado;
 
-public class Cliente extends Pessoa {
+import java.util.Scanner;
 
-    //Atributos
+public class Cliente extends Pessoa {
+    Scanner sn = new Scanner(System.in);
+    Scanner ss = new Scanner(System.in);
+
+    // Atributos
     private int id;
     private float saldo;
 
-    //Construtor
+    // Construtor
     public Cliente(int id, float saldo, String nome, String cpf, String senha) {
         super(nome, cpf, senha);
         this.id = id;
         this.saldo = saldo;
     }
 
-    //Getters e Seters
+    // Getters e Seters
     public int getId() {
         return id;
     }
@@ -30,14 +34,23 @@ public class Cliente extends Pessoa {
         this.saldo = saldo;
     }
 
-    //Método herança
+    // Método herança
     @Override
     public void mostrarDados() {
+        System.out.println("===== Dados =====");
         System.out.println("Nome: " + getNome());
         System.out.println("CPF: " + getCpf());
         System.out.println("ID: " + getId());
-        System.out.println("Saldo: " + getSaldo());
+        System.out.println("Saldo: R$" + getSaldo());
+        System.out.println("=================");
+
     }
 
-    
+    public void depositarSaldo() {
+        System.out.print("Quanto você quer depositar ? R$");
+        float saldo = sn.nextFloat();
+        setSaldo(getSaldo() + saldo);
+
+    }
+
 }

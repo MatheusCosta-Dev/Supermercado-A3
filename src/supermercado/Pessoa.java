@@ -29,11 +29,11 @@ public class Pessoa implements MostrarDados {
         this.cpf = cpf;
     }
 
-    public String getSenha(){
+    public String getSenha() {
         return senha;
     }
 
-    public void setSenha(String senha){
+    public void setSenha(String senha) {
         this.senha = senha;
     }
 

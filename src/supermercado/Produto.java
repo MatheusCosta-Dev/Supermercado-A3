@@ -38,18 +38,27 @@ public class Produto {
         this.preco = preco;
     }
 
+    // Construtor
+    
     //Métodos 
     public void mostrarProdutos() {
+        System.out.println("========================");
         System.out.println("Código: " + getCodigo());
         System.out.println("Nome: " + getNome());
         System.out.println("Preço: " + getPreco());
-        System.out.println("========================");
+        
     }
 
-    public void cadastrar() {
-        System.out.println("Escreva o nome do produto: ");
+    public Produto(String nome, int codigo, float preco) {
+        this.nome = nome;
+        this.codigo = codigo;
+        this.preco = preco;
+    }
+
+    public void cadastrarProduto() {
+        System.out.print("Escreva o nome do produto: ");
         setNome(ss.nextLine());
-        System.out.println("Escreva o preço: ");
+        System.out.print("Escreva o preço: ");
         setPreco(sn.nextFloat());
     }
     /*
