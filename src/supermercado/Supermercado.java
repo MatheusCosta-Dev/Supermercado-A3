@@ -12,7 +12,7 @@ public class Supermercado {
         Scanner sn = new Scanner(System.in);
 
         // Variaveis
-        int matricula, id, codigo, codigoProduto, matriculaFuncionario = 0, idCliente = 0;
+        int matriculaFuncionario = 0, idCliente = 0, codigo = 0, codigoProduto;
         String nome, cpf, cargo, senha;
         float salario, saldo, preco;
         boolean sairMenuPrincipal = true;
@@ -182,7 +182,7 @@ public class Supermercado {
 
                         // Cadastro de clientes
                         System.out.println("CADASTRAR CLIENTE");
-                        id = idCliente + 1;
+                        idCliente = idCliente + 1;
                         System.out.print("Digite seu nome: ");
                         nome = ss.nextLine();
                         System.out.print("Digite seu CPF: ");
@@ -193,7 +193,7 @@ public class Supermercado {
                         senha = ss.nextLine();
 
                         // Criando objeto de cliente
-                        Cliente cliente = new Cliente(id, saldo, nome, cpf, senha);
+                        Cliente cliente = new Cliente(idCliente, saldo, nome, cpf, senha);
 
                         // Adicionando ao arrayList de clientes
                         clientes.add(cliente);
@@ -213,7 +213,7 @@ public class Supermercado {
                     if (opcaocadastro == 2) {
 
                         // Cadastro de funcionarios
-                        matricula = matriculaFuncionario + 1;
+                        matriculaFuncionario = matriculaFuncionario + 1;
                         System.out.println("CADASTRAR FUNCIONARIO");
                         System.out.print("Digite o nome do funcionario: ");
                         nome = ss.nextLine();
@@ -227,7 +227,7 @@ public class Supermercado {
                         senha = ss.nextLine();
 
                         // Criando objeto de funcionario
-                        Funcionario funcionario = new Funcionario(matricula, cargo, salario, nome, cpf, senha);
+                        Funcionario funcionario = new Funcionario(matriculaFuncionario, cargo, salario, nome, cpf, senha);
 
                         // Adicionando ao arrayList de funcionarios
                         funcionarios.add(funcionario);
@@ -268,10 +268,9 @@ public class Supermercado {
                                                 break;
                                             case 2:
                                                 // Cadastro de produtos
+                                                codigo =  codigo + 1;
                                                 System.out.print("Digite o nome do produto: ");
                                                 nome = ss.nextLine();
-                                                System.out.print("Digite o código do produto: ");
-                                                codigo = sn.nextInt();
                                                 System.out.print("Digite o preço do produto: R$");
                                                 preco = sn.nextInt();
 
