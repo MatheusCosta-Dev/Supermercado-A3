@@ -12,7 +12,7 @@ public class Supermercado {
         Scanner sn = new Scanner(System.in);
 
         // Variaveis
-        int matricula, id, codigo, codigoProduto;
+        int matricula, id, codigo, codigoProduto, matriculaFuncionario = 0, idCliente = 0;
         String nome, cpf, cargo, senha;
         float salario, saldo, preco;
         boolean sairMenuPrincipal = true;
@@ -33,160 +33,162 @@ public class Supermercado {
             switch (menu) {
                 case 1:
 
-                    //Direcionamento para login ou tela de registro
+                    // Direcionamento para login ou tela de registro
                     System.out.println("Você já tem cadastro?");
                     System.out.println("[1] - Sim");
                     System.out.println("[2] - Não");
                     int opcaocadastro = sn.nextInt();
-                    
-                    if(opcaocadastro == 1){
+
+                    if (opcaocadastro == 1) {
                         // Verificando se há clientes cadastrados
                         if (clientes.isEmpty() == true) {
-                        System.out.println("============================");
-                        System.out.println("Nao há clientes cadastrados.");
-                        System.out.println("============================");
-                        break;
-                    }
+                            System.out.println("============================");
+                            System.out.println("Nao há clientes cadastrados.");
+                            System.out.println("============================");
+                            break;
+                        }
 
-                    // Seleção de cliente
-                    boolean sairMenuCliente = true;
-                    boolean sairPainelCliente = true;
-                    do {
-                        System.out.println("Informe o nome do cliente:");
-                        nome = ss.nextLine();
-                        System.out.println("Informe o senha do cliente:");
-                        senha = ss.nextLine();
+                        // Seleção de cliente
+                        boolean sairMenuCliente = true;
+                        boolean sairPainelCliente = true;
+                        do {
+                            System.out.println("Informe o nome do cliente:");
+                            nome = ss.nextLine();
+                            System.out.println("Informe o senha do cliente:");
+                            senha = ss.nextLine();
 
-                        for (Cliente x : clientes) {
+                            for (Cliente x : clientes) {
 
-                            // Verificando login do Cliente
-                            if (nome.equals(x.getNome()) && senha.equals(x.getSenha())) {
-                                System.out.println("Painel de cliente aberto para: " + x.getNome());
-                                do {
-                                    System.out.println("====== PAINEL CLIENTE ======");
-                                    System.out.println("[1] - Mostrar dados");
-                                    System.out.println("[2] - Depositar saldo");
-                                    System.out.println("[3] - Comprar produtos");
-                                    System.out.println("[4] - Fechar painel");
+                                // Verificando login do Cliente
+                                if (nome.equals(x.getNome()) && senha.equals(x.getSenha())) {
+                                    System.out.println("Painel de cliente aberto para: " + x.getNome());
+                                    do {
+                                        System.out.println("====== PAINEL CLIENTE ======");
+                                        System.out.println("[1] - Mostrar dados");
+                                        System.out.println("[2] - Depositar saldo");
+                                        System.out.println("[3] - Comprar produtos");
+                                        System.out.println("[4] - Fechar painel");
+                                        int resp = sn.nextInt();
+
+                                        switch (resp) {
+                                            case 1:
+                                                x.mostrarDados();
+                                                break;
+                                            case 2:
+                                                x.depositarSaldo();
+                                                break;
+                                            case 3:
+                                                boolean selecionarProduto = true;
+                                                boolean sairPainelProduto = true;
+                                                do {
+
+                                                    // Painel de compra
+                                                    System.out.println("====== PAINEL DE COMPRAS ======");
+                                                    System.out.println("[1] - Lista de produtos");
+                                                    System.out.println("[2] - Mostrar carrinho");
+                                                    System.out.println("[3] - Fechar pedido");
+                                                    System.out.println("[4] - Fechar Painel");
+                                                    resp = sn.nextInt();
+
+                                                    switch (resp) {
+                                                        case 1:
+                                                            // Verificano se há produtos cadastrados
+                                                            if (produtos.isEmpty() == true) {
+                                                                System.out.println("============================");
+                                                                System.out.println("Nao há produtos cadastrados.");
+                                                                System.out.println("============================");
+                                                                break;
+                                                            }
+
+                                                            // Selecionar produtos
+                                                            for (Produto i : produtos) {
+                                                                i.mostrarProdutos();
+                                                            }
+
+                                                            for (Produto i : produtos) {
+                                                                do {
+                                                                    System.out.print(
+                                                                            "Digite o nome do produto que quer adicionar ao carrinho: ");
+                                                                    codigoProduto = sn.nextInt();
+
+                                                                    // Verificando se o produto existe
+                                                                    if (codigoProduto == i.getCodigo()) {
+
+                                                                    } else {
+                                                                        System.out.println(
+                                                                                codigoProduto
+                                                                                        + " nao esta na lista de produtos.");
+                                                                        System.out.println(
+                                                                                "Quer tentar novamente ? [1] - Sim / [2] - Nao");
+                                                                        resp = sn.nextInt();
+                                                                        switch (resp) {
+                                                                            case 1:
+                                                                                selecionarProduto = true;
+                                                                                break;
+                                                                            case 2:
+                                                                                selecionarProduto = false;
+                                                                                break;
+                                                                            default:
+                                                                                System.out.println("Opçao invalida.");
+                                                                                break;
+                                                                        }
+                                                                    }
+                                                                } while (selecionarProduto == true);
+                                                            }
+                                                            break;
+                                                        case 2:
+
+                                                            break;
+                                                        case 3:
+
+                                                            break;
+                                                        case 4:
+                                                            sairPainelProduto = false;
+                                                            break;
+                                                        default:
+                                                            break;
+                                                    }
+                                                } while (sairPainelProduto == true);
+
+                                                break;
+                                            case 4:
+                                                sairPainelCliente = false;
+                                                sairMenuCliente = false;
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    } while (sairPainelCliente == true);
+                                    // Caso o cliente nao exista
+                                } else {
+                                    System.out.println("Usuario ou senha invalidos");
+                                    System.out.println("Quer tentar novamente ? [1] - Sim / [2] - Nao");
                                     int resp = sn.nextInt();
-
                                     switch (resp) {
                                         case 1:
-                                            x.mostrarDados();
+                                            sairMenuCliente = true;
                                             break;
                                         case 2:
-                                            x.depositarSaldo();
-                                            break;
-                                        case 3:
-                                            boolean selecionarProduto = true;
-                                            boolean sairListaProduto = true;
-
-                                            // Painel de compra
-                                            System.out.println("====== PAINEL DE COMPRAS ======");
-                                            System.out.println("[1] - Lista de produtos");
-                                            System.out.println("[2] - Mostrar carrinho");
-                                            System.out.println("[3] - Fechar pedido");
-                                            System.out.println("[4] - Fechar Painel");
-                                            resp = sn.nextInt();
-
-                                            switch (resp) {
-                                                case 1:
-                                                    // Verificano se há produtos cadastrados
-                                                    if (produtos.isEmpty() == true) {
-                                                        System.out.println("============================");
-                                                        System.out.println("Nao há produtos cadastrados.");
-                                                        System.out.println("============================");
-                                                        break;
-                                                    }
-
-                                                    // Selecionar produtos
-                                                    for (Produto i : produtos) {
-                                                        i.mostrarProdutos();
-                                                    }
-
-                                                    for (Produto i : produtos) {
-                                                        do {
-                                                            System.out.print(
-                                                                    "Digite o nome do produto que quer adicionar ao carrinho: ");
-                                                            codigoProduto = sn.nextInt();
-
-                                                            // Verificando se o produto existe
-                                                            if (codigoProduto == i.getCodigo()) {
-
-                                                            } else {
-                                                                System.out.println(
-                                                                        codigoProduto + " nao esta na lista de produtos.");
-                                                                System.out.println(
-                                                                        "Quer tentar novamente ? [1] - Sim / [2] - Nao");
-                                                                resp = sn.nextInt();
-                                                                switch (resp) {
-                                                                    case 1:
-                                                                        selecionarProduto = true;
-                                                                        break;
-                                                                    case 2:
-                                                                        selecionarProduto = false;
-                                                                        break;
-                                                                    default:
-                                                                        System.out.println("Opçao invalida.");
-                                                                        break;
-                                                                }
-                                                            }
-                                                        } while (selecionarProduto == true);
-                                                    }
-                                                    break;
-                                                case 2:
-
-                                                    break;
-                                                case 3:
-
-                                                    break;
-                                                case 4:
-
-                                                    break;
-                                                default:
-                                                    break;
-                                            }
-
-                                            break;
-                                        case 4:
-                                            sairPainelCliente = false;
                                             sairMenuCliente = false;
                                             break;
                                         default:
+                                            System.out.println("Opçao invalida.");
                                             break;
                                     }
-                                } while (sairPainelCliente == true);
-                                // Caso o cliente nao exista
-                            } else {
-                                System.out.println(" Usuario e senha invalidos ou inexistente");
-                                System.out.println("Quer tentar novamente ? [1] - Sim / [2] - Nao");
-                                int resp = sn.nextInt();
-                                switch (resp) {
-                                    case 1:
-                                        sairMenuCliente = true;
-                                        break;
-                                    case 2:
-                                        sairMenuCliente = false;
-                                        break;
-                                    default:
-                                        System.out.println("Opçao invalida.");
-                                        break;
                                 }
                             }
-                        }
-                    } while (sairMenuCliente == true);
-                    }else if(opcaocadastro == 2){
+                        } while (sairMenuCliente == true);
+                    } else if (opcaocadastro == 2) {
 
                         // Cadastro de clientes
                         System.out.println("CADASTRAR CLIENTE");
+                        id = idCliente + 1;
                         System.out.print("Digite seu nome: ");
                         nome = ss.nextLine();
                         System.out.print("Digite seu CPF: ");
                         cpf = ss.nextLine();
                         System.out.print("Digite seu saldo: R$ ");
                         saldo = sn.nextFloat();
-                        System.out.print("Digite seu ID: ");
-                        id = sn.nextInt();
                         System.out.print("Digite uma senha: ");
                         senha = ss.nextLine();
 
@@ -196,28 +198,27 @@ public class Supermercado {
                         // Adicionando ao arrayList de clientes
                         clientes.add(cliente);
 
-                    }else{
+                    } else {
                         System.out.println("Opção invalida, digite novamente uma opção valida.");
                     }
-                    
+
                     break;
                 case 2:
-                    //Direcionamento para login ou tela de registro
+                    // Direcionamento para login ou tela de registro
                     System.out.println("Você já tem cadastro?");
                     System.out.println("[1] - Sim");
                     System.out.println("[2] - Não");
                     opcaocadastro = sn.nextInt();
-                    
-                    if(opcaocadastro == 2){
+
+                    if (opcaocadastro == 2) {
 
                         // Cadastro de funcionarios
+                        matricula = matriculaFuncionario + 1;
                         System.out.println("CADASTRAR FUNCIONARIO");
                         System.out.print("Digite o nome do funcionario: ");
                         nome = ss.nextLine();
                         System.out.print("Digite o CPF: ");
                         cpf = ss.nextLine();
-                        System.out.print("Digite a matricula: ");
-                        matricula = sn.nextInt();
                         System.out.print("Digite o cargo: ");
                         cargo = ss.nextLine();
                         System.out.print("Digite o salario do funcionario: R$");
@@ -230,8 +231,8 @@ public class Supermercado {
 
                         // Adicionando ao arrayList de funcionarios
                         funcionarios.add(funcionario);
-                        
-                    } else if(opcaocadastro == 1){
+
+                    } else if (opcaocadastro == 1) {
 
                         // Verificano se há funcionarios cadastrados
                         if (funcionarios.isEmpty() == true) {
@@ -289,7 +290,7 @@ public class Supermercado {
                                                 System.out.println("Opçao invalida tente novamente.");
                                                 break;
                                         }
-
+                                        // Caso senha de funcionario seja invalido
                                     } while (sairPainelFuncionario == true);
                                 } else {
                                     System.out.println("Usuario e senha invalidos ou inexistente");
@@ -309,11 +310,10 @@ public class Supermercado {
                                 }
                             }
                         } while (sairMenuFuncionario == true);
-                        
-                        
+
                     }
 
-                break;
+                    break;
                 case 3:
                     System.out.println("Fechando supermercado...");
                     sairMenuPrincipal = false;
