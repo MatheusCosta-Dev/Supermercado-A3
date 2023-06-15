@@ -73,11 +73,12 @@ public class Supermercado {
                                     switch (resp) {
                                         case 1:
                                             x.mostrarDados();
-                                            break;
+                                        break;
                                         case 2:
                                             x.depositarSaldo();
-                                            break;
+                                        break;
                                         case 3:
+                                        
                                             boolean selecionarProduto = true;
                                             boolean sairListaProduto = true;
 
@@ -99,20 +100,21 @@ public class Supermercado {
                                                         break;
                                                     }
 
-                                                    // Selecionar produtos
+                                                    // Mostrando produtos para seleção
                                                     for (Produto i : produtos) {
                                                         i.mostrarProdutos();
                                                     }
 
+                                                    // Selecionar produtos
                                                     for (Produto i : produtos) {
                                                         do {
                                                             System.out.print(
-                                                                    "Digite o nome do produto que quer adicionar ao carrinho: ");
+                                                                    "Digite o codigo do produto que quer adicionar ao carrinho: ");
                                                             codigoProduto = sn.nextInt();
 
                                                             // Verificando se o produto existe
                                                             if (codigoProduto == i.getCodigo()) {
-
+                                                                System.out.println("\n======================================\n  Seu produto ja está no seu carinho!\n======================================\n");
                                                             } else {
                                                                 System.out.println(
                                                                         codigoProduto + " nao esta na lista de produtos.");
