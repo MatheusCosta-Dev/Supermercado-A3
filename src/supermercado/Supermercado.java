@@ -163,8 +163,8 @@ public class Supermercado {
                                 } else {
                                     System.out.println("Usuario ou senha invalidos");
                                     System.out.println("Quer tentar novamente ? [1] - Sim / [2] - Nao");
-                                    int resp = sn.nextInt();
-                                    switch (resp) {
+                                    int respLogin = sn.nextInt();
+                                    switch (respLogin) {
                                         case 1:
                                             sairMenuCliente = true;
                                             break;
@@ -227,7 +227,8 @@ public class Supermercado {
                         senha = ss.nextLine();
 
                         // Criando objeto de funcionario
-                        Funcionario funcionario = new Funcionario(matriculaFuncionario, cargo, salario, nome, cpf, senha);
+                        Funcionario funcionario = new Funcionario(matriculaFuncionario, cargo, salario, nome, cpf,
+                                senha);
 
                         // Adicionando ao arrayList de funcionarios
                         funcionarios.add(funcionario);
@@ -268,7 +269,7 @@ public class Supermercado {
                                                 break;
                                             case 2:
                                                 // Cadastro de produtos
-                                                codigo =  codigo + 1;
+                                                codigo = codigo + 1;
                                                 System.out.print("Digite o nome do produto: ");
                                                 nome = ss.nextLine();
                                                 System.out.print("Digite o preço do produto: R$");
@@ -310,6 +311,8 @@ public class Supermercado {
                             }
                         } while (sairMenuFuncionario == true);
 
+                    } else {
+                        System.out.println("Opçao invalida...");
                     }
 
                     break;
@@ -318,6 +321,7 @@ public class Supermercado {
                     sairMenuPrincipal = false;
                     break;
                 default:
+                    System.out.println("Opçao invalida...");
                     break;
             }
         } while (sairMenuPrincipal == true);
