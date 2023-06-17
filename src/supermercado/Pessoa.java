@@ -1,7 +1,19 @@
 package supermercado;
 
 public class Pessoa {
-    private String nome, telefone, rua, bairro, cidade,cep,senha;
+
+    // Atributos
+    private int id;
+    private String nome, email, senha, cpf, telefone, rua, bairro, cidade, cep;
+
+    // Geters e Seters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
@@ -9,6 +21,30 @@ public class Pessoa {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getTelefone() {
@@ -51,23 +87,20 @@ public class Pessoa {
         this.cep = cep;
     }
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-    
-    
-    public Pessoa(String nome, String telefone, String rua, String bairro, String cidade, String cep) {
+    // Construtor
+    public Pessoa(String nome, String email, String senha, String cpf, String telefone, String rua, String bairro,
+            String cidade, String cep) {
         this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.cpf = cpf;
         this.telefone = telefone;
         this.rua = rua;
         this.bairro = bairro;
         this.cidade = cidade;
         this.cep = cep;
     }
-    
-    
+
+
+
 }

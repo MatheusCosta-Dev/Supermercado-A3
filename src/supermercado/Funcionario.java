@@ -1,35 +1,34 @@
-
 package supermercado;
 
-import java.util.Scanner;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Scanner;
 
-public class Cliente extends Pessoa implements MostrarDados {
+public class Funcionario extends Pessoa implements MostrarDados{
     Scanner sn = new Scanner(System.in);
     Scanner ss = new Scanner(System.in);
 
     // Atributos
-    private float saldo;
+    private float salario;
 
     // Geters e Seters
-    public float getSaldo() {
-        return saldo;
+    public float getSalario() {
+        return salario;
     }
 
-    public void setSaldo(float saldo) {
-        this.saldo = saldo;
+    public void setSalario(float salario) {
+        this.salario = salario;
     }
 
     // Construtor
-    public Cliente(String nome, String email, String senha, String cpf, String telefone, String rua, String bairro, String cidade, String cep, float saldo) {
+    public Funcionario(String nome, String email, String senha, String cpf, String telefone, String rua, String bairro, String cidade, String cep, float salario) {
         super(nome, email, senha, cpf, telefone, rua, bairro, cidade, cep);
-        this.saldo = saldo;
+        this.salario = salario;
     }
 
     // Cadastrando no banco de dados
     public void cadastrar() {
-        String sql = "INSERT INTO cliente (nome, email, senha, cpf, telefone, rua, bairro, cidade, cep, saldo) VALUES ( '" 
+        String sql = "INSERT INTO funcionario (nome, email, senha, cpf, telefone, rua, bairro, cidade, cep, salario) VALUES ( '" 
         + getNome() + "','" 
         + getEmail() + "','" 
         + getSenha() + "','" 
@@ -39,14 +38,14 @@ public class Cliente extends Pessoa implements MostrarDados {
         + getBairro() + "','" 
         + getCidade() + "','" 
         + getCep() + "'," 
-        + getSaldo() + ")";
+        + getSalario() + ")";
 
         Conexao.executar(sql);
     }
 
-    // Editando dados do cliente
+    // Editando dados do funcionario
     public void editar(){
-        String sql = "UPDATE cliente SET" 
+        String sql = "UPDATE funcionario SET" 
         + " nome = '" + getNome() + "', "
         + " email = '" + getEmail() + "', "
         + " senha = '" + getSenha() + "', "
@@ -61,14 +60,14 @@ public class Cliente extends Pessoa implements MostrarDados {
         Conexao.executar(sql);
     }
 
-    public static void excluir (int idCliente){
-        String sql = "DELETE FROM cliente WHERE id = " + idCliente;
+    public static void excluir (int idFuncionario){
+        String sql = "DELETE FROM funcionario WHERE id = " + idFuncionario;
     }
 
-    public static ArrayList<Cliente> getClientes(){
-        ArrayList<Cliente> lista = new ArrayList<>();
+    public static ArrayList<Funcionario> getFuncionarios(){
+        ArrayList<Funcionario> lista = new ArrayList<>();
 
-        String sql = "SELECT id, nome, email, senha, cpf, telefone, rua, bairro, cidade, cep, saldo FROM cliente ORDER BY nome";
+        String sql = "SELECT id, nome, email, senha, cpf, telefone, rua, bairro, cidade, cep, salario FROM funcionario ORDER BY nome";
 
         ResultSet rs = Conexao.consultar( sql );
 
@@ -84,11 +83,11 @@ public class Cliente extends Pessoa implements MostrarDados {
                     String bairro = rs. getString(8);
                     String cidade = rs. getString(9);
                     String cep = rs. getString(10);
-                    Float saldo = rs. getFloat(11);
+                    Float salario = rs. getFloat(11);
 
-                    Cliente cliente = new Cliente (nome, email, senha, cpf, telefone, rua, bairro, cidade, cep, saldo);
-                    cliente.setId( rs.getInt(1));
-                    lista.add(cliente);
+                    Funcionario funcionario = new Funcionario (nome, email, senha, cpf, telefone, rua, bairro, cidade, cep, salario);
+                    funcionario.setId( rs.getInt(1));
+                    lista.add(funcionario);
                 }
             }catch ( Exception e) {
                 System.out.println("==>" + e);
@@ -108,21 +107,8 @@ public class Cliente extends Pessoa implements MostrarDados {
         System.out.println("Bairro: " + getBairro());
         System.out.println("Cidade: " + getCidade());
         System.out.println("Cep: " + getCep());
-        System.out.println("Saldo: " + getSaldo());
+        System.out.println("Salario: " + getSalario());
 
     }
-
-    public void depositar(){
-        System.out.print("Quanto voce quer depositar? ");
-        float vdeposito = sn.nextFloat();
-        setSaldo(getSaldo() + vdeposito);
-
-        String sql = "UPDATE cliente SET" 
-        + " saldo = '" + getNome() + " "
-        + " WHERE id = '" + getId();
-
-        Conexao.executar(sql);
-    }
-
 
 }
