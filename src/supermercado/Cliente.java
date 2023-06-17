@@ -1,56 +1,36 @@
+
 package supermercado;
 
-import java.util.Scanner;
-
 public class Cliente extends Pessoa {
-    Scanner sn = new Scanner(System.in);
-    Scanner ss = new Scanner(System.in);
+    private String email, cpf;
 
-    // Atributos
-    private int id;
-    private float saldo;
-
-    // Construtor
-    public Cliente(int id, float saldo, String nome, String cpf, String senha) {
-        super(nome, cpf, senha);
-        this.id = id;
-        this.saldo = saldo;
+    public String getEmail() {
+        return email;
     }
 
-    // Getters e Seters
-    public int getId() {
-        return id;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getCpf() {
+        return cpf;
     }
 
-    public float getSaldo() {
-        return saldo;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
-    public void setSaldo(float saldo) {
-        this.saldo = saldo;
+    public Cliente(String email, String cpf, String nome, String telefone, String rua, String bairro, String cidade, String cep) {
+        super(nome, telefone, rua, bairro, cidade, cep);
+        this.email = email;
+        this.cpf = cpf;
     }
-
-    // Método herança
-    @Override
-    public void mostrarDados() {
-        System.out.println("===== Dados =====");
-        System.out.println("Nome: " + getNome());
-        System.out.println("CPF: " + getCpf());
-        System.out.println("ID: " + getId());
-        System.out.println("Saldo: R$" + getSaldo());
-        System.out.println("=================");
-
+    
+    public void cadastrar(){
+        String sql = "INSERT INTO cliente (nome,email,cpf,telefone,rua,bairro,cidade,cep,senha) VALUES ( '" + getNome() + "','" + getEmail() + "','" + 
+                getCpf() + "','" + getTelefone() + "','" + getRua() + 
+                "','" + getBairro() + "','" + getCidade() + "','" + getCep() + "','" + getSenha()+ "')";
+        
+        Conexao.executar( sql );
     }
-
-    public void depositarSaldo() {
-        System.out.print("Quanto você quer depositar ? R$");
-        float saldo = sn.nextFloat();
-        setSaldo(getSaldo() + saldo);
-
-    }
-
 }

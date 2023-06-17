@@ -1,18 +1,8 @@
 package supermercado;
 
-public class Pessoa implements MostrarDados {
+public class Pessoa {
+    private String nome, telefone, rua, bairro, cidade,cep,senha;
 
-    //Atributos
-    private String nome, cpf, senha;
-
-    //Construtor
-    public Pessoa(String nome, String cpf, String senha) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.senha = senha;
-    }
-
-    //Geters e setters
     public String getNome() {
         return nome;
     }
@@ -21,12 +11,44 @@ public class Pessoa implements MostrarDados {
         this.nome = nome;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getRua() {
+        return rua;
+    }
+
+    public void setRua(String rua) {
+        this.rua = rua;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 
     public String getSenha() {
@@ -36,12 +58,16 @@ public class Pessoa implements MostrarDados {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
-    //Puxando interface
-    @Override
-    public void mostrarDados() {
-        System.out.println("Nome: " + getNome());
-        System.out.println("CPF: " + getCpf());
+    
+    
+    public Pessoa(String nome, String telefone, String rua, String bairro, String cidade, String cep) {
+        this.nome = nome;
+        this.telefone = telefone;
+        this.rua = rua;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.cep = cep;
     }
-
+    
+    
 }
