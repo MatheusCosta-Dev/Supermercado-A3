@@ -15,7 +15,7 @@ public class Supermercado {
         ArrayList<Cliente> listaClientes = new ArrayList();
         String nome, email, senha, cpf, telefone, rua, bairro, cidade, cep;
         float saldo = 0, saldoCliente = 0;
-        int  cont = 0, opcaoMenu = 0, idCliente = 0, excecoes = 0, menuCliente = 0, menuPrincipal = 0;
+        int cont = 0, opcaoMenu = 0, idCliente = 0, excecoes = 0, menuCliente = 0, menuPrincipal = 0;
         Cliente cliente;
 
         do { // Menu principal
@@ -57,6 +57,7 @@ public class Supermercado {
                     do {
                         switch (opcaoMenu) {
                             case 1:// Logar Cliente
+                                
                                 System.out.print("Digite seu email: ");
                                 String veriEmail = ss.nextLine();
                                 System.out.print("Digite sua senha: ");
@@ -67,12 +68,16 @@ public class Supermercado {
                                     if (veriEmail.equals(c.getEmail()) && veriSenha.equals(c.getSenha())) {
                                         idCliente = c.getId();
                                         saldoCliente = c.getSaldo();
-                                    } else {
 
+                                    } else {
+                                        menuCliente = 1;
                                     }
+
                                 }
                                 do { // Ja estando logado| Menu Cliente Logado
+
                                     try {
+                                        System.out.println("\n\n====== MENU CLIENTE ======");
                                         System.out.println("[1] Mostrar Dados");
                                         System.out.println("[2] Depositar Saldo");
                                         System.out.println("[3] Comprar Produtos");
@@ -91,7 +96,13 @@ public class Supermercado {
 
                                     switch (opcaoMenu) {
                                         case 1:
-
+                                            listaClientes = Cliente.getClientes();
+                                            for (Cliente c : listaClientes) {
+                                                if (idCliente == c.getId()) {
+                                                    c.mostrarDados();
+                                                }
+                                            }
+                                            menuCliente = 1;
                                             break;
                                         case 2:
                                             float valorDeposito = 0;
@@ -169,6 +180,7 @@ public class Supermercado {
 
                                 break;
                         }
+
                     } while (cont != 0);
 
                     break;
@@ -180,6 +192,7 @@ public class Supermercado {
                     menuPrincipal = 0;
                     break;
             }
+
         } while (menuPrincipal != 0);
 
     }
