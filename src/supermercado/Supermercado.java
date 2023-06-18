@@ -7,31 +7,33 @@ import java.util.Scanner;
 public class Supermercado {
 
     public static void main(String[] args) {
-        //Scanners
+        // Scanners
         Scanner ss = new Scanner(System.in);
         Scanner sn = new Scanner(System.in);
-        
-        //Varivais
+
+        // Arrays List
+        ArrayList<Cliente> listaClientes = new ArrayList();
         String nome, email, senha, cpf, telefone, rua, bairro, cidade, cep;
-        float saldo = 0;
-        int erro, cont = 0, opcaoMenu = 0;
+        float saldo = 0, saldoCliente = 0;
+        int  cont = 0, opcaoMenu = 0, idCliente = 0, excecoes = 0, menuCliente = 0, menuPrincipal = 0;
+        Cliente cliente;
 
         do { // Menu principal
             do {
                 try {
                     System.out.println("[1] Cliente \n[2] Funcionario \n[3] Sair");
                     opcaoMenu = sn.nextInt();
-                    erro = 0;
+                    excecoes = 0;
                 } catch (InputMismatchException ae) {
                     System.out.println("Letra em lugar de numero! ");
-                    erro = 1;
+                    excecoes = 1;
                     sn.nextLine();
                 } catch (Throwable ime) {
                     System.out.println("Algo errado, tente novamente!");
-                    erro = 1;
+                    excecoes = 1;
                     sn.nextLine();
                 }
-            } while (erro != 0);
+            } while (excecoes != 0);
 
             switch (opcaoMenu) {
                 case 1: // Opção Cliente
@@ -40,45 +42,91 @@ public class Supermercado {
                         try {
                             System.out.println("[1] Logar \n[2] Registrar");
                             opcaoMenu = sn.nextInt();
-                            erro = 0;
+                            excecoes = 0;
                         } catch (InputMismatchException ae) {
                             System.out.println("Letra em lugar de numero! ");
-                            erro = 1;
+                            excecoes = 1;
                             sn.nextLine();
                         } catch (Throwable ime) {
                             System.out.println("Algo errado, tente novamente!");
-                            erro = 1;
+                            excecoes = 1;
                             sn.nextLine();
                         }
-                    } while (erro != 0);
+                    } while (excecoes != 0);
 
                     do {
                         switch (opcaoMenu) {
                             case 1:// Logar Cliente
-                            /*Ajuda para fazer login consultando o banco
+                                System.out.print("Digite seu email: ");
+                                String veriEmail = ss.nextLine();
+                                System.out.print("Digite sua senha: ");
+                                String veriSenha = ss.nextLine();
 
+                                listaClientes = Cliente.getClientes();
+                                for (Cliente c : listaClientes) {
+                                    if (veriEmail.equals(c.getEmail()) && veriSenha.equals(c.getSenha())) {
+                                        idCliente = c.getId();
+                                        saldoCliente = c.getSaldo();
+                                    } else {
 
-                            */
+                                    }
+                                }
+                                do { // Ja estando logado| Menu Cliente Logado
+                                    try {
+                                        System.out.println("[1] Mostrar Dados");
+                                        System.out.println("[2] Depositar Saldo");
+                                        System.out.println("[3] Comprar Produtos");
+                                        System.out.println("[4] Fechar Painel");
+                                        opcaoMenu = sn.nextInt();
+                                        excecoes = 0;
+                                    } catch (InputMismatchException ae) {
+                                        System.out.println("Letra em lugar de numero! ");
+                                        excecoes = 1;
+                                        sn.nextLine();
+                                    } catch (Throwable ime) {
+                                        System.out.println("Algo errado, tente novamente!");
+                                        excecoes = 1;
+                                        sn.nextLine();
+                                    }
 
-                            do { // Ja estando logado| Menu Cliente Logado
-                        try {
-                            System.out.println("[1] Mostrar Dados \n[2] Depositar Saldo \n[3] Comprar Produtos \n[4] Fechar Painel");
-                            opcaoMenu = sn.nextInt();
-                            erro = 0;
-                        } catch (InputMismatchException ae) {
-                            System.out.println("Letra em lugar de numero! ");
-                            erro = 1;
-                            sn.nextLine();
-                        } catch (Throwable ime) {
-                            System.out.println("Algo errado, tente novamente!");
-                            erro = 1;
-                            sn.nextLine();
-                        }
-                    } while (erro != 0);
+                                    switch (opcaoMenu) {
+                                        case 1:
 
-
-
-                            break;
+                                            break;
+                                        case 2:
+                                            float valorDeposito = 0;
+                                            do {
+                                                try {
+                                                    System.out.print("Quanto voce quer depositar? R$ ");
+                                                    valorDeposito = sn.nextFloat();
+                                                    excecoes = 0;
+                                                } catch (InputMismatchException ae) {
+                                                    System.out.println("Letra em lugar de numero! ");
+                                                    excecoes = 1;
+                                                    sn.nextLine();
+                                                } catch (Throwable ime) {
+                                                    System.out.println("Algo errado, tente novamente!");
+                                                    excecoes = 1;
+                                                    sn.nextLine();
+                                                }
+                                            } while (excecoes != 0);
+                                            valorDeposito += saldoCliente;
+                                            cliente = new Cliente(valorDeposito);
+                                            cliente.setId(idCliente);
+                                            cliente.depositar();
+                                            menuCliente = 1;
+                                            break;
+                                        case 3:
+                                            break;
+                                        case 4:
+                                            menuCliente = 0;
+                                            menuPrincipal = 0;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } while (menuCliente != 0);
+                                break;
 
                             case 2:// Registrar Cliente
                                 System.out.println("CADASTRO CLIENTE");
@@ -104,35 +152,35 @@ public class Supermercado {
                                     try {
                                         System.out.print("Digite o saldo: ");
                                         saldo = sn.nextFloat();
-                                        erro = 0;
+                                        excecoes = 0;
                                     } catch (InputMismatchException ae) {
                                         System.out.println("Letra em lugar de numero! ");
-                                        erro = 1;
+                                        excecoes = 1;
                                         sn.nextLine();
                                     } catch (Throwable ime) {
                                         System.out.println("Algo errado, tente novamente!");
-                                        erro = 1;
+                                        excecoes = 1;
                                         sn.nextLine();
                                     }
-                                } while (erro != 0);
-                                Cliente cliente = new Cliente(nome, email, senha, cpf, telefone, rua, bairro, cidade,
-                                        cep, saldo);
+                                } while (excecoes != 0);
+                                cliente = new Cliente(nome, email, senha, cpf, telefone, rua, bairro, cidade, cep,
+                                        saldo);
                                 cliente.cadastrar();
 
-                            break;
+                                break;
                         }
                     } while (cont != 0);
 
-                break;
+                    break;
 
                 case 2:// Funcionario
-                break;
+                    break;
 
-                case 3: //Sair
-                cont = 0;
-                break;
+                case 3: // Sair
+                    menuPrincipal = 0;
+                    break;
             }
-        } while (cont != 0);
+        } while (menuPrincipal != 0);
 
     }
 

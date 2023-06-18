@@ -101,6 +101,10 @@ public class Pessoa {
         this.cep = cep;
     }
 
+    public Pessoa() {
+    }
+
+    
 
 
 }
