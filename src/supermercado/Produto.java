@@ -12,6 +12,7 @@ public class Produto {
     private String nome;
     private int codigo;
     private float preco;
+    private Categoria categoria;
     
     //Geters e Seters
     public int getCodigo() {
@@ -38,8 +39,12 @@ public class Produto {
         this.preco = preco;
     }
 
+    
+
     // Construtor
     
+    
+
     //Métodos 
     public void mostrarProdutos() {
         System.out.println("========================");
@@ -60,6 +65,12 @@ public class Produto {
         setNome(ss.nextLine());
         System.out.print("Escreva o preço: ");
         setPreco(sn.nextFloat());
+        
+        
+        
+        System.out.print("Escreva o id da categoria: ");
+        
+
     }
     /*
     

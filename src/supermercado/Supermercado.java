@@ -332,8 +332,10 @@ public class Supermercado {
                                             try {
                                                 System.out.println("\n\n====== MENU FUNCIONARIO ======");
                                                 System.out.println("[1] Mostrar Dados");
-                                                System.out.println("[2] Depositar Saldo");
-                                                System.out.println("[3] Comprar Produtos");
+                                                System.out.println("[2] Cadastrar Produto");
+                                                System.out.println("[3] Mostrar Produtos");
+                                                System.out.println("[4] Editar Perfil");
+                                                System.out.println("[4] Criar categoria de produtos");
                                                 System.out.println("[4] Editar Perfil");
                                                 System.out.println("[5] Fechar Painel");
                                                 opcaoMenu = sn.nextInt();
@@ -358,32 +360,9 @@ public class Supermercado {
                                                     }
                                                     menuFuncionario = 1;
                                                     break;
-                                                    //Paramos aqui
+                                                    // vai toma no cu
                                                 case 2:
-                                                    float valorDeposito = 0;
-                                                    do {
-                                                        try {
-                                                            System.out.print("Quanto voce quer depositar? R$ ");
-                                                            valorDeposito = sn.nextFloat();
-                                                            excecoes = 0;
-                                                        } catch (InputMismatchException ae) {
-                                                            System.out.println("Letra em lugar de numero! ");
-                                                            excecoes = 1;
-                                                            sn.nextLine();
-                                                        } catch (Throwable ime) {
-                                                            System.out.println("Algo errado, tente novamente!");
-                                                            excecoes = 1;
-                                                            sn.nextLine();
-                                                        }
-                                                    } while (excecoes != 0);
-                                                    valorDeposito += saldoCliente;
-                                                    cliente = new Cliente();
-                                                    cliente.setSaldo(valorDeposito);
-                                                    cliente.setId(idCliente);
-                                                    cliente.depositar();
-                                                    System.out.println("Deposito realizado com sucesso!");
-                                                    System.out.println("Você possui R$" + cliente.getSaldo());
-                                                    menuCliente = 1;
+                                                   System.out.println("");
                                                     break;
                                                 case 3:
                                                     break;
