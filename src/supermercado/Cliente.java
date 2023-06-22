@@ -23,6 +23,9 @@ public class Cliente extends Pessoa implements MostrarDados {
     }
 
     // Construtor
+    public Cliente() {
+
+    }
 
     public Cliente(float saldo) {
 
@@ -65,6 +68,41 @@ public class Cliente extends Pessoa implements MostrarDados {
                 + " cidade = '" + getCidade() + "', "
                 + " cep = '" + getCep() + " "
                 + " WHERE id = '" + getId();
+
+        Conexao.executar(sql);
+    }
+
+    public void editarNome() {
+        String sql = "UPDATE cliente SET "
+                + " nome = '" + getNome() + "' "
+                + " WHERE id = " + getId();
+
+        Conexao.executar(sql);
+    }
+
+    public void editarSenha() {
+        String sql = "UPDATE cliente SET "
+                + " senha = '" + getSenha() + "' "
+                + " WHERE id = " + getId();
+
+        Conexao.executar(sql);
+    }
+
+    public void editarTelefone() {
+        String sql = "UPDATE cliente SET "
+                + " telefone = '" + getTelefone() + "' "
+                + " WHERE id = " + getId();
+
+        Conexao.executar(sql);
+    }
+
+    public void editarEndereco() {
+        String sql = "UPDATE cliente SET "
+                + " rua = '" + getRua() + "', "
+                + " bairro = '" + getBairro() + "', "
+                + " cidade = '" + getCidade() + "', "
+                + " cep = '" + getCep() + "' "
+                + " WHERE id = " + getId();
 
         Conexao.executar(sql);
     }
