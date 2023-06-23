@@ -102,6 +102,7 @@ public class Funcionario extends Pessoa implements MostrarDados{
 
     public void excluir (int idFuncionario){
         String sql = "DELETE FROM funcionario WHERE id = " + getId();
+        Conexao.executar(sql);
     }
 
     public static ArrayList<Funcionario> getFuncionarios(){

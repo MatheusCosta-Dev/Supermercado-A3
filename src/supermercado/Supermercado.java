@@ -17,7 +17,7 @@ public class Supermercado {
         String nome, email, senha, cpf, telefone, rua, bairro, cidade, cep;
         float saldo = 0, saldoCliente = 0, salario = 0;
         int cont = 0, opcaoMenu = 0, idCliente = 0, idFuncionario = 0, excecoes = 0, menuCliente = 0, menuFuncionario = 0, menuPrincipal = 0,
-                opcaoMenuCliente = 0, painelCliente = 1, editCliente = 0, editFuncionario = 0, painelFuncionario = 0, opcaoMenuFuncionario = 0;
+                opcaoMenuCliente = 0, painelPrincipal = 1, editCliente = 0, editFuncionario = 0, painelFuncionario = 0, opcaoMenuFuncionario = 0;
         Cliente cliente;
         Funcionario funcionario;
         boolean loginSucesso = false;
@@ -45,7 +45,7 @@ public class Supermercado {
                 }
 
             } while (excecoes != 0);
-            while (painelCliente != 0) {
+            while (painelPrincipal != 0) {
                 switch (opcaoMenu) {
                     case 1: // Opção Cliente
                         // Menu Login ou Cadastro
@@ -157,6 +157,7 @@ public class Supermercado {
                                                     System.out.println("[2] Editar Senha");
                                                     System.out.println("[3] Editar Telefone");
                                                     System.out.println("[4] Editar Endereço");
+                                                    System.out.println("[5] Excluir");
                                                     do {
                                                         try {
                                                             editCliente = sn.nextInt();
@@ -190,7 +191,7 @@ public class Supermercado {
                                                             cliente.editarSenha();
                                                             menuCliente = 0;
                                                             menuPrincipal = 0;
-                                                            painelCliente = 0;
+                                                            painelPrincipal = 0;
                                                             break;
                                                         case 3:
                                                             System.out.print("Digite seu novo telefone: ");
@@ -218,6 +219,27 @@ public class Supermercado {
                                                             cliente.setId(idCliente);
                                                             cliente.editarEndereco();
                                                             break;
+                                                        case 5:
+                                                            cliente = new Cliente();
+                                                            cliente.setId(idCliente);
+                                                            do {
+                                                                System.out.println("Tem certeza que você quer excluir o perfil? S/N");
+                                                                String opcaoExcluir = ss.nextLine();
+                                                                if (opcaoExcluir.equalsIgnoreCase("S")) {
+                                                                    cliente.excluir(idCliente);
+                                                                    System.out.println("Excluído com sucesso!");
+                                                                    menuCliente = 0;
+                                                                    menuPrincipal = 0;
+                                                                    painelPrincipal = 0;
+                                                                    break; // Sai do loop após exclusão bem-sucedida
+                                                                } else if (opcaoExcluir.equalsIgnoreCase("N")) {
+                                                                    System.out.println("Fique tranquilo, não foi excluído!");
+                                                                    menuPrincipal = 0;
+                                                                } else {
+                                                                    System.out.println("Opção inválida. Por favor, digite S ou N.");
+                                                                }
+                                                            } while (menuPrincipal != 0);
+                                                            break;
                                                         default:
                                                             System.out.println("Opçao invalida.");
                                                             break;
@@ -227,7 +249,7 @@ public class Supermercado {
                                                 case 5:
                                                     menuCliente = 0;
                                                     menuPrincipal = 0;
-                                                    painelCliente = 0;
+                                                    painelPrincipal = 0;
                                                     break;
                                                 default:
                                                     break;
@@ -278,7 +300,7 @@ public class Supermercado {
                                             saldo);
                                     cliente.cadastrar();
                                     System.out.println("Cliente cadastrado.");
-                                    painelCliente = 1;
+                                    painelPrincipal = 1;
                                     break;
                             }
 
@@ -360,9 +382,9 @@ public class Supermercado {
                                                     }
                                                     menuFuncionario = 1;
                                                     break;
-                                                    // vai toma no cu
+                                                // vai toma no cu
                                                 case 2:
-                                                   System.out.println("");
+                                                    System.out.println("");
                                                     break;
                                                 case 3:
                                                     break;
@@ -435,17 +457,23 @@ public class Supermercado {
                                                         case 5:
                                                             funcionario = new Funcionario();
                                                             funcionario.setId(idFuncionario);
-                                                            System.out.println(" Tem certeza que você quer excluir o perfil? S / N");
-                                                            String opcaoExcluir = ss.nextLine();
-                                                            if ( opcaoExcluir.equals("S" ) || opcaoExcluir.equals("s")){
-                                                                funcionario.excluir(idFuncionario);
-                                                                System.out.println("Excluido com sucesso!");
-                                                            } else if (opcaoExcluir.equals("N" ) || opcaoExcluir.equals("n")){
-                                                                System.out.println(" Fique tranquilo não foi excluido!");
-                                                            } else {
-                                                                System.out.println("Opção invalida.");
-                                                            }
-
+                                                            do {
+                                                                System.out.println("Tem certeza que você quer excluir o perfil? S/N");
+                                                                String opcaoExcluir = ss.nextLine();
+                                                                if (opcaoExcluir.equalsIgnoreCase("S")) {
+                                                                    funcionario.excluir(idFuncionario);
+                                                                    System.out.println("Excluído com sucesso!");
+                                                                    menuFuncionario = 0;
+                                                                    menuPrincipal = 0;
+                                                                    painelPrincipal = 0;
+                                                                    break; // Sai do loop após exclusão bem-sucedida
+                                                                } else if (opcaoExcluir.equalsIgnoreCase("N")) {
+                                                                    System.out.println("Fique tranquilo, não foi excluído!");
+                                                                    menuPrincipal = 0;
+                                                                } else {
+                                                                    System.out.println("Opção inválida. Por favor, digite S ou N.");
+                                                                }
+                                                            } while (menuPrincipal != 0);
                                                             break;
                                                         default:
                                                             System.out.println("Opçao invalida.");
@@ -516,7 +544,7 @@ public class Supermercado {
 
                     case 3: // Sair
                         menuPrincipal = 0;
-                        painelCliente = 0;
+                        painelPrincipal = 0;
                         break;
 
                 }
