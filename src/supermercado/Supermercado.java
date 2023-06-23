@@ -15,10 +15,11 @@ public class Supermercado {
         ArrayList<Cliente> listaClientes = new ArrayList();
         ArrayList<Funcionario> listaFuncionarios = new ArrayList();
         String nome, email, senha, cpf, telefone, rua, bairro, cidade, cep;
-        float saldo = 0, saldoCliente = 0;
+        float saldo = 0, saldoCliente = 0, salario = 0;
         int cont = 0, opcaoMenu = 0, idCliente = 0, idFuncionario = 0, excecoes = 0, menuCliente = 0, menuFuncionario = 0, menuPrincipal = 0,
-                opcaoMenuCliente = 0, painelCliente = 1, editCliente = 0, painelFuncionario = 0, opcaoMenuFuncionario = 0;
+                opcaoMenuCliente = 0, painelCliente = 1, editCliente = 0, editFuncionario = 0, painelFuncionario = 0, opcaoMenuFuncionario = 0;
         Cliente cliente;
+        Funcionario funcionario;
         boolean loginSucesso = false;
 
         do { // Menu principal
@@ -335,9 +336,8 @@ public class Supermercado {
                                                 System.out.println("[2] Cadastrar Produto");
                                                 System.out.println("[3] Mostrar Produtos");
                                                 System.out.println("[4] Editar Perfil");
-                                                System.out.println("[4] Criar categoria de produtos");
-                                                System.out.println("[4] Editar Perfil");
-                                                System.out.println("[5] Fechar Painel");
+                                                System.out.println("[5] Criar categoria de produtos");
+                                                System.out.println("[6] Fechar Painel");
                                                 opcaoMenu = sn.nextInt();
                                                 excecoes = 0;
                                             } catch (InputMismatchException ae) {
@@ -354,7 +354,7 @@ public class Supermercado {
                                                 case 1:
                                                     listaFuncionarios = Funcionario.getFuncionarios();
                                                     for (Funcionario f : listaFuncionarios) {
-                                                        if (idCliente == f.getId()) {
+                                                        if (idFuncionario == f.getId()) {
                                                             f.mostrarDados();
                                                         }
                                                     }
@@ -373,9 +373,10 @@ public class Supermercado {
                                                     System.out.println("[2] Editar Senha");
                                                     System.out.println("[3] Editar Telefone");
                                                     System.out.println("[4] Editar Endereço");
+                                                    System.out.println("[5] Excluir");
                                                     do {
                                                         try {
-                                                            editCliente = sn.nextInt();
+                                                            editFuncionario = sn.nextInt();
                                                             excecoes = 0;
                                                         } catch (InputMismatchException ae) {
                                                             System.out.println("Letra em lugar de numero! ");
@@ -387,34 +388,31 @@ public class Supermercado {
                                                             sn.nextLine();
                                                         }
                                                     } while (excecoes != 0);
-                                                    switch (editCliente) {
+                                                    switch (editFuncionario) {
                                                         case 1:
                                                             System.out.print("Digite o novo nome: ");
                                                             nome = ss.nextLine();
-                                                            cliente = new Cliente();
-                                                            cliente.setNome(nome);
-                                                            cliente.setId(idCliente);
-                                                            cliente.editarNome();
+                                                            funcionario = new Funcionario();
+                                                            funcionario.setNome(nome);
+                                                            funcionario.setId(idFuncionario);
+                                                            funcionario.editarNome();
 
                                                             break;
                                                         case 2:
                                                             System.out.print("Digite sua nova senha: ");
                                                             senha = ss.nextLine();
-                                                            cliente = new Cliente();
-                                                            cliente.setSenha(senha);
-                                                            cliente.setId(idCliente);
-                                                            cliente.editarSenha();
-                                                            menuCliente = 0;
-                                                            menuPrincipal = 0;
-                                                            painelCliente = 0;
+                                                            funcionario = new Funcionario();
+                                                            funcionario.setSenha(senha);
+                                                            funcionario.setId(idFuncionario);
+                                                            funcionario.editarSenha();
                                                             break;
                                                         case 3:
                                                             System.out.print("Digite seu novo telefone: ");
                                                             telefone = ss.nextLine();
-                                                            cliente = new Cliente();
-                                                            cliente.setTelefone(telefone);
-                                                            cliente.setId(idCliente);
-                                                            cliente.editarTelefone();
+                                                            funcionario = new Funcionario();
+                                                            funcionario.setTelefone(telefone);
+                                                            funcionario.setId(idFuncionario);
+                                                            funcionario.editarTelefone();
                                                             break;
                                                         case 4:
                                                             System.out.print("Digite a Rua: ");
@@ -426,13 +424,28 @@ public class Supermercado {
                                                             System.out.print("Digite o Cep: ");
                                                             cep = ss.nextLine();
 
-                                                            cliente = new Cliente();
-                                                            cliente.setRua(rua);
-                                                            cliente.setBairro(bairro);
-                                                            cliente.setCidade(cidade);
-                                                            cliente.setCep(cep);
-                                                            cliente.setId(idCliente);
-                                                            cliente.editarEndereco();
+                                                            funcionario = new Funcionario();
+                                                            funcionario.setRua(rua);
+                                                            funcionario.setBairro(bairro);
+                                                            funcionario.setCidade(cidade);
+                                                            funcionario.setCep(cep);
+                                                            funcionario.setId(idFuncionario);
+                                                            funcionario.editarEndereco();
+                                                            break;
+                                                        case 5:
+                                                            funcionario = new Funcionario();
+                                                            funcionario.setId(idFuncionario);
+                                                            System.out.println(" Tem certeza que você quer excluir o perfil? S / N");
+                                                            String opcaoExcluir = ss.nextLine();
+                                                            if ( opcaoExcluir.equals("S" ) || opcaoExcluir.equals("s")){
+                                                                funcionario.excluir(idFuncionario);
+                                                                System.out.println("Excluido com sucesso!");
+                                                            } else if (opcaoExcluir.equals("N" ) || opcaoExcluir.equals("n")){
+                                                                System.out.println(" Fique tranquilo não foi excluido!");
+                                                            } else {
+                                                                System.out.println("Opção invalida.");
+                                                            }
+
                                                             break;
                                                         default:
                                                             System.out.println("Opçao invalida.");
@@ -441,22 +454,22 @@ public class Supermercado {
 
                                                     break;
                                                 case 5:
-                                                    menuCliente = 0;
+                                                    menuFuncionario = 0;
                                                     menuPrincipal = 0;
-                                                    painelCliente = 0;
+                                                    painelFuncionario = 0;
                                                     break;
                                                 default:
                                                     break;
                                             }
-                                        } while (menuCliente != 0);
+                                        } while (menuFuncionario != 0);
                                         break;
                                     } else {
                                         System.out.println("Email ou senha incorretos. Tente novamente.");
                                     }
                                     break;
 
-                                case 2:// Registrar Cliente
-                                    System.out.println("CADASTRO CLIENTE");
+                                case 2:// Registrar Funcionario 
+                                    System.out.println("CADASTRO FUNCIONARIO");
                                     System.out.print("Digite o seu Nome: ");
                                     nome = ss.nextLine();
                                     System.out.print("Digite sua senha: ");
@@ -477,8 +490,8 @@ public class Supermercado {
                                     cep = ss.nextLine();
                                     do {
                                         try {
-                                            System.out.print("Digite o saldo: ");
-                                            saldo = sn.nextFloat();
+                                            System.out.print("Digite o salario: ");
+                                            salario = sn.nextFloat();
                                             excecoes = 0;
                                         } catch (InputMismatchException ae) {
                                             System.out.println("Letra em lugar de numero! ");
@@ -490,11 +503,11 @@ public class Supermercado {
                                             sn.nextLine();
                                         }
                                     } while (excecoes != 0);
-                                    cliente = new Cliente(nome, email, senha, cpf, telefone, rua, bairro, cidade, cep,
-                                            saldo);
-                                    cliente.cadastrar();
-                                    System.out.println("Cliente cadastrado.");
-                                    painelCliente = 1;
+                                    funcionario = new Funcionario(nome, email, senha, cpf, telefone, rua, bairro, cidade, cep,
+                                            salario);
+                                    funcionario.cadastrar();
+                                    System.out.println("Funcionario cadastrado.");
+                                    painelFuncionario = 1;
                                     break;
                             }
 

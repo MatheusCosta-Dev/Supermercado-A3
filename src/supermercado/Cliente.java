@@ -154,7 +154,7 @@ public class Cliente extends Pessoa implements MostrarDados {
         System.out.println("Bairro: " + getBairro());
         System.out.println("Cidade: " + getCidade());
         System.out.println("Cep: " + getCep());
-        System.out.println("Saldo: " + getSaldo());
+        System.out.println("Saldo: R$" + getSaldo());
 
     }
 

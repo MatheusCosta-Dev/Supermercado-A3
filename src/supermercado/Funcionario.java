@@ -26,6 +26,11 @@ public class Funcionario extends Pessoa implements MostrarDados{
         this.salario = salario;
     }
 
+    public Funcionario() {
+    }
+
+    
+
     // Cadastrando no banco de dados
     public void cadastrar() {
         String sql = "INSERT INTO funcionario (nome, email, senha, cpf, telefone, rua, bairro, cidade, cep, salario) VALUES ( '" 
@@ -60,8 +65,43 @@ public class Funcionario extends Pessoa implements MostrarDados{
         Conexao.executar(sql);
     }
 
-    public static void excluir (int idFuncionario){
-        String sql = "DELETE FROM funcionario WHERE id = " + idFuncionario;
+    public void editarNome() {
+        String sql = "UPDATE funcionario SET "
+                + " nome = '" + getNome() + "' "
+                + " WHERE id = " + getId();
+
+        Conexao.executar(sql);
+    }
+
+    public void editarTelefone() {
+        String sql = "UPDATE funcionario SET "
+                + " telefone = '" + getTelefone() + "' "
+                + " WHERE id = " + getId();
+
+        Conexao.executar(sql);
+    }
+
+    public void editarEndereco() {
+        String sql = "UPDATE funcionario SET "
+                + " rua = '" + getRua() + "', "
+                + " bairro = '" + getBairro() + "', "
+                + " cidade = '" + getCidade() + "', "
+                + " cep = '" + getCep() + "' "
+                + " WHERE id = " + getId();
+
+        Conexao.executar(sql);
+    }
+
+    public void editarSenha() {
+        String sql = "UPDATE funcionario SET "
+                + " senha = '" + getSenha() + "' "
+                + " WHERE id = " + getId();
+
+        Conexao.executar(sql);
+    }
+
+    public void excluir (int idFuncionario){
+        String sql = "DELETE FROM funcionario WHERE id = " + getId();
     }
 
     public static ArrayList<Funcionario> getFuncionarios(){
@@ -107,7 +147,7 @@ public class Funcionario extends Pessoa implements MostrarDados{
         System.out.println("Bairro: " + getBairro());
         System.out.println("Cidade: " + getCidade());
         System.out.println("Cep: " + getCep());
-        System.out.println("Salario: " + getSalario());
+        System.out.println("Salario: R$" + getSalario());
 
     }
 
