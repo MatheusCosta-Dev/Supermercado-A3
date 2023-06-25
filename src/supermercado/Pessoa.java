@@ -1,6 +1,9 @@
 package supermercado;
 
+import java.util.Scanner;
+
 public class Pessoa {
+    Scanner ss = new Scanner(System.in);
 
     // Atributos
     private int id;
@@ -103,8 +106,31 @@ public class Pessoa {
 
     public Pessoa() {
     }
+/* 
+    public void editarNome() {
+        System.out.print("Digite o novo nome: ");
+        setNome(ss.nextLine());
+    }
 
-    
+    public void editarSenha() {
+        System.out.print("Digite sua nova senha: ");
+        setSenha(ss.nextLine());
+    }
 
+    public void editarTelefone() {
+        System.out.print("Digite seu novo telefone: ");
+        setTelefone(ss.nextLine());
+    }
 
+    public void editarEndereco() {
+        System.out.print("Digite a Rua: ");
+        setRua(ss.nextLine());
+        System.out.print("Digite o Bairro: ");
+        setBairro(ss.nextLine());
+        System.out.print("Digite a Cidade: ");
+        setCidade(ss.nextLine());
+        System.out.print("Digite o Cep: ");
+        setCep(ss.nextLine());
+    }
+    */
 }

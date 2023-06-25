@@ -176,19 +176,12 @@ public class Supermercado {
                                                     } while (excecoes != 0);
                                                     switch (editCliente) {
                                                         case 1:
-                                                            System.out.print("Digite o novo nome: ");
-                                                            nome = ss.nextLine();
                                                             cliente = new Cliente();
-                                                            cliente.setNome(nome);
                                                             cliente.setId(idCliente);
                                                             cliente.editarNome();
-
                                                             break;
                                                         case 2:
-                                                            System.out.print("Digite sua nova senha: ");
-                                                            senha = ss.nextLine();
                                                             cliente = new Cliente();
-                                                            cliente.setSenha(senha);
                                                             cliente.setId(idCliente);
                                                             cliente.editarSenha();
                                                             menuCliente = 0;
@@ -196,28 +189,12 @@ public class Supermercado {
                                                             painelPrincipal = 0;
                                                             break;
                                                         case 3:
-                                                            System.out.print("Digite seu novo telefone: ");
-                                                            telefone = ss.nextLine();
                                                             cliente = new Cliente();
-                                                            cliente.setTelefone(telefone);
                                                             cliente.setId(idCliente);
                                                             cliente.editarTelefone();
                                                             break;
                                                         case 4:
-                                                            System.out.print("Digite a Rua: ");
-                                                            rua = ss.nextLine();
-                                                            System.out.print("Digite o Bairro: ");
-                                                            bairro = ss.nextLine();
-                                                            System.out.print("Digite a Cidade: ");
-                                                            cidade = ss.nextLine();
-                                                            System.out.print("Digite o Cep: ");
-                                                            cep = ss.nextLine();
-
                                                             cliente = new Cliente();
-                                                            cliente.setRua(rua);
-                                                            cliente.setBairro(bairro);
-                                                            cliente.setCidade(cidade);
-                                                            cliente.setCep(cep);
                                                             cliente.setId(idCliente);
                                                             cliente.editarEndereco();
                                                             break;
@@ -268,7 +245,7 @@ public class Supermercado {
 
                                 case 2:// Registrar Cliente
                                     cliente = new Cliente();
-                                    cliente.cadastrarCliente();
+                                    cliente.cadastrar();
 
                                     break;
                             }
