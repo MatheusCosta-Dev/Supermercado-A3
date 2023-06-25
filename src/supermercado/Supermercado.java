@@ -22,7 +22,7 @@ public class Supermercado {
                 opcaoMenuFuncionario = 0;
         Cliente cliente;
         Funcionario funcionario;
-        boolean loginSucesso = false;
+        boolean loginSucesso = false, voltarAoMenu = false;
 
         do { // Menu principal
             do {
@@ -201,26 +201,35 @@ public class Supermercado {
                                                         case 5:
                                                             cliente = new Cliente();
                                                             cliente.setId(idCliente);
+
+                                                            boolean opcaoValida = false;
+
                                                             do {
                                                                 System.out.println(
                                                                         "Tem certeza que você quer excluir o perfil? S/N");
                                                                 String opcaoExcluir = ss.nextLine();
+
                                                                 if (opcaoExcluir.equalsIgnoreCase("S")) {
                                                                     cliente.excluir(idCliente);
                                                                     System.out.println("Excluído com sucesso!");
                                                                     menuCliente = 0;
                                                                     menuPrincipal = 0;
                                                                     painelPrincipal = 0;
-                                                                    break; // Sai do loop após exclusão bem-sucedida
+                                                                    opcaoValida = true;
                                                                 } else if (opcaoExcluir.equalsIgnoreCase("N")) {
                                                                     System.out.println(
                                                                             "Fique tranquilo, não foi excluído!");
                                                                     menuPrincipal = 0;
+                                                                    painelPrincipal = 0;
+                                                                    opcaoValida = true;
                                                                 } else {
                                                                     System.out.println(
                                                                             "Opção inválida. Por favor, digite S ou N.");
+                                                                    opcaoValida = false; // Mantém a opção como inválida
+                                                                                         // e repete o loop
                                                                 }
-                                                            } while (menuPrincipal != 0);
+                                                            } while (!opcaoValida);
+
                                                             break;
                                                         default:
                                                             System.out.println("Opçao invalida.");
@@ -358,71 +367,63 @@ public class Supermercado {
                                                     } while (excecoes != 0);
                                                     switch (editFuncionario) {
                                                         case 1:
-                                                            System.out.print("Digite o novo nome: ");
-                                                            nome = ss.nextLine();
                                                             funcionario = new Funcionario();
-                                                            funcionario.setNome(nome);
                                                             funcionario.setId(idFuncionario);
                                                             funcionario.editarNome();
-
                                                             break;
                                                         case 2:
-                                                            System.out.print("Digite sua nova senha: ");
-                                                            senha = ss.nextLine();
                                                             funcionario = new Funcionario();
-                                                            funcionario.setSenha(senha);
                                                             funcionario.setId(idFuncionario);
                                                             funcionario.editarSenha();
+                                                            menuFuncionario = 0;
+                                                            menuPrincipal = 0;
+                                                            painelPrincipal = 0;
                                                             break;
                                                         case 3:
-                                                            System.out.print("Digite seu novo telefone: ");
-                                                            telefone = ss.nextLine();
                                                             funcionario = new Funcionario();
-                                                            funcionario.setTelefone(telefone);
                                                             funcionario.setId(idFuncionario);
                                                             funcionario.editarTelefone();
                                                             break;
                                                         case 4:
-                                                            System.out.print("Digite a Rua: ");
-                                                            rua = ss.nextLine();
-                                                            System.out.print("Digite o Bairro: ");
-                                                            bairro = ss.nextLine();
-                                                            System.out.print("Digite a Cidade: ");
-                                                            cidade = ss.nextLine();
-                                                            System.out.print("Digite o Cep: ");
-                                                            cep = ss.nextLine();
-
                                                             funcionario = new Funcionario();
-                                                            funcionario.setRua(rua);
-                                                            funcionario.setBairro(bairro);
-                                                            funcionario.setCidade(cidade);
-                                                            funcionario.setCep(cep);
                                                             funcionario.setId(idFuncionario);
                                                             funcionario.editarEndereco();
                                                             break;
                                                         case 5:
-                                                            funcionario = new Funcionario();
-                                                            funcionario.setId(idFuncionario);
+                                                            cliente = new Cliente();
+                                                            cliente.setId(idCliente);
+
+                                                            boolean opcaoValida = false;
+
                                                             do {
                                                                 System.out.println(
                                                                         "Tem certeza que você quer excluir o perfil? S/N");
                                                                 String opcaoExcluir = ss.nextLine();
+
                                                                 if (opcaoExcluir.equalsIgnoreCase("S")) {
-                                                                    funcionario.excluir(idFuncionario);
+                                                                    cliente.excluir(idCliente);
                                                                     System.out.println("Excluído com sucesso!");
-                                                                    menuFuncionario = 0;
+                                                                    menuCliente = 0;
                                                                     menuPrincipal = 0;
                                                                     painelPrincipal = 0;
-                                                                    break; // Sai do loop após exclusão bem-sucedida
+                                                                    opcaoValida = true;
+                                                                    voltarAoMenu = true; // Define que o usuário deseja
+                                                                                         // voltar ao menu de edição
                                                                 } else if (opcaoExcluir.equalsIgnoreCase("N")) {
                                                                     System.out.println(
                                                                             "Fique tranquilo, não foi excluído!");
                                                                     menuPrincipal = 0;
+                                                                    painelPrincipal = 0;
+                                                                    opcaoValida = true;
+                                                                    voltarAoMenu = true; // Define que o usuário deseja
+                                                                                         // voltar ao menu de edição
                                                                 } else {
                                                                     System.out.println(
                                                                             "Opção inválida. Por favor, digite S ou N.");
+                                                                    opcaoValida = false; // Mantém a opção como inválida
+                                                                                         // e repete o loop
                                                                 }
-                                                            } while (menuPrincipal != 0);
+                                                            } while (!opcaoValida);
                                                             break;
                                                         default:
                                                             System.out.println("Opçao invalida.");
@@ -446,46 +447,8 @@ public class Supermercado {
                                     break;
 
                                 case 2:// Registrar Funcionario
-                                    System.out.println("CADASTRO FUNCIONARIO");
-                                    System.out.print("Digite o seu Nome: ");
-                                    nome = ss.nextLine();
-                                    System.out.print("Digite sua senha: ");
-                                    senha = ss.nextLine();
-                                    System.out.print("Digite o Email: ");
-                                    email = ss.nextLine();
-                                    System.out.print("Digite o Cpf: ");
-                                    cpf = ss.nextLine();
-                                    System.out.print("Digite o Telefone: ");
-                                    telefone = ss.nextLine();
-                                    System.out.print("Digite a Rua: ");
-                                    rua = ss.nextLine();
-                                    System.out.print("Digite o Bairro: ");
-                                    bairro = ss.nextLine();
-                                    System.out.print("Digite a Cidade: ");
-                                    cidade = ss.nextLine();
-                                    System.out.print("Digite o Cep: ");
-                                    cep = ss.nextLine();
-                                    do {
-                                        try {
-                                            System.out.print("Digite o salario: ");
-                                            salario = sn.nextFloat();
-                                            excecoes = 0;
-                                        } catch (InputMismatchException ae) {
-                                            System.out.println("Letra em lugar de numero! ");
-                                            excecoes = 1;
-                                            sn.nextLine();
-                                        } catch (Throwable ime) {
-                                            System.out.println("Algo errado, tente novamente!");
-                                            excecoes = 1;
-                                            sn.nextLine();
-                                        }
-                                    } while (excecoes != 0);
-                                    funcionario = new Funcionario(nome, email, senha, cpf, telefone, rua, bairro,
-                                            cidade, cep,
-                                            salario);
+                                    funcionario = new Funcionario();
                                     funcionario.cadastrar();
-                                    System.out.println("Funcionario cadastrado.");
-                                    painelFuncionario = 1;
                                     break;
                             }
 

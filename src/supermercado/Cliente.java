@@ -181,6 +181,7 @@ public class Cliente extends Pessoa implements MostrarDados {
     public void excluir(int idCliente) {
         String sql = "DELETE FROM cliente WHERE id = " + getId();
         Conexao.executar(sql);
+
     }
 
     public static ArrayList<Cliente> getClientes() {

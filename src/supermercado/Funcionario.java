@@ -2,6 +2,7 @@ package supermercado;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Funcionario extends Pessoa implements MostrarDados{
@@ -10,6 +11,7 @@ public class Funcionario extends Pessoa implements MostrarDados{
 
     // Atributos
     private float salario;
+    private Funcionario funcionario;
 
     // Geters e Seters
     public float getSalario() {
@@ -33,6 +35,46 @@ public class Funcionario extends Pessoa implements MostrarDados{
 
     // Cadastrando no banco de dados
     public void cadastrar() {
+        int excecoes = 0;
+
+        System.out.println("CADASTRO FUNCIONARIO");
+        System.out.print("Digite o seu nome: ");
+        setNome(ss.nextLine());
+        System.out.print("Digite sua senha: ");
+        setSenha(ss.nextLine());
+        System.out.print("Digite o Email: ");
+        setEmail(ss.nextLine());
+        System.out.print("Digite o cpf: ");
+        setCpf(ss.nextLine());
+        System.out.print("digite o telefone: ");
+        setTelefone(ss.nextLine());
+        System.out.print("Digite a rua: ");
+        setRua(ss.nextLine());
+        System.out.print("Digite o bairro: ");
+        setBairro(ss.nextLine());
+        System.out.print("DIgite a cidade:");
+        setCidade(ss.nextLine());
+        System.out.print("Digite o cep: ");
+        setCep(ss.nextLine());
+
+        do {
+            try {
+                System.out.print("Digite o saldo: ");
+                setSalario(sn.nextFloat());
+                excecoes = 0;
+            } catch (InputMismatchException ae) {
+                System.out.println("Letra em lugar de numero! ");
+                excecoes = 1;
+                sn.nextLine();
+            } catch (Throwable ime) {
+                System.out.println("Algo errado, tente novamente!");
+                excecoes = 1;
+                sn.nextLine();
+            }
+        } while (excecoes != 0);
+        funcionario = new Funcionario(getNome(), getEmail(), getSenha(), getCpf(), getTelefone(), getRua(), getBairro(),
+                getCidade(), getCep(), getSalario());
+
         String sql = "INSERT INTO funcionario (nome, email, senha, cpf, telefone, rua, bairro, cidade, cep, salario) VALUES ( '" 
         + getNome() + "','" 
         + getEmail() + "','" 
@@ -46,6 +88,8 @@ public class Funcionario extends Pessoa implements MostrarDados{
         + getSalario() + ")";
 
         Conexao.executar(sql);
+
+        System.out.println("Funcionario cadastrado!");
     }
 
     // Editando dados do funcionario
@@ -66,22 +110,40 @@ public class Funcionario extends Pessoa implements MostrarDados{
     }
 
     public void editarNome() {
+        System.out.print("Digite o novo nome: ");
+        setNome(ss.nextLine());
+
         String sql = "UPDATE funcionario SET "
                 + " nome = '" + getNome() + "' "
                 + " WHERE id = " + getId();
 
         Conexao.executar(sql);
+
+        System.out.println("Nome alterado com sucesso!");
     }
 
     public void editarTelefone() {
+        System.out.print("Digite seu novo telefone: ");
+        setTelefone(ss.nextLine());
         String sql = "UPDATE funcionario SET "
                 + " telefone = '" + getTelefone() + "' "
                 + " WHERE id = " + getId();
 
         Conexao.executar(sql);
+
+        System.out.println("Telefone alterado com sucesso!");
     }
 
     public void editarEndereco() {
+        System.out.print("Digite a Rua: ");
+        setRua(ss.nextLine());
+        System.out.print("Digite o Bairro: ");
+        setBairro(ss.nextLine());
+        System.out.print("Digite a Cidade: ");
+        setCidade(ss.nextLine());
+        System.out.print("Digite o Cep: ");
+        setCep(ss.nextLine());
+
         String sql = "UPDATE funcionario SET "
                 + " rua = '" + getRua() + "', "
                 + " bairro = '" + getBairro() + "', "
@@ -90,14 +152,21 @@ public class Funcionario extends Pessoa implements MostrarDados{
                 + " WHERE id = " + getId();
 
         Conexao.executar(sql);
+
+        System.out.println("Endereço alterado com sucesso...");
     }
 
     public void editarSenha() {
+        System.out.print("Digite sua nova senha: ");
+        setSenha(ss.nextLine());
+
         String sql = "UPDATE funcionario SET "
                 + " senha = '" + getSenha() + "' "
                 + " WHERE id = " + getId();
 
         Conexao.executar(sql);
+
+        System.out.println("Senha alterada com sucesso, faça login novamente.");
     }
 
     public void excluir (int idFuncionario){
