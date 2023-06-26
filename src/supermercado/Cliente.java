@@ -1,4 +1,3 @@
-
 package supermercado;
 
 import java.sql.ResultSet;
@@ -7,12 +6,17 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Cliente extends Pessoa implements MostrarDados {
+
     Scanner sn = new Scanner(System.in);
     Scanner ss = new Scanner(System.in);
+
+    ArrayList<Produto> listaProdutos = new ArrayList();
 
     // Atributos
     private float saldo;
     private Cliente cliente;
+    private Produto produto;
+    private int codigo;
 
     // Geters e Seters
     public float getSaldo() {
@@ -114,7 +118,6 @@ public class Cliente extends Pessoa implements MostrarDados {
         Conexao.executar(sql);
     }
 
-    
     public void editarNome() {
         System.out.print("Digite o novo nome: ");
         setNome(ss.nextLine());
@@ -128,7 +131,6 @@ public class Cliente extends Pessoa implements MostrarDados {
         System.out.println("Nome alterado com sucesso!");
     }
 
-    
     public void editarSenha() {
         System.out.print("Digite sua nova senha: ");
         setSenha(ss.nextLine());
@@ -142,7 +144,6 @@ public class Cliente extends Pessoa implements MostrarDados {
         System.out.println("Senha alterada com sucesso, faça login novamente.");
     }
 
-    
     public void editarTelefone() {
         System.out.print("Digite seu novo telefone: ");
         setTelefone(ss.nextLine());
@@ -155,7 +156,6 @@ public class Cliente extends Pessoa implements MostrarDados {
         System.out.println("Telefone alterado com sucesso!");
     }
 
-    
     public void editarEndereco() {
         System.out.print("Digite a Rua: ");
         setRua(ss.nextLine());
@@ -232,12 +232,67 @@ public class Cliente extends Pessoa implements MostrarDados {
     }
 
     public void depositar() {
+        ArrayList<Cliente> listaClientes = new ArrayList();
+        float saldoCliente, valorDeposito = 0;
+        
+        int excecoes = 0;
+        do {
+            try {
+                System.out.print("Quanto voce quer depositar? R$ ");
+                valorDeposito = sn.nextFloat();
+                excecoes = 0;
+            } catch (InputMismatchException ae) {
+                System.out.println("Letra em lugar de numero! ");
+                excecoes = 1;
+                sn.nextLine();
+            } catch (Throwable ime) {
+                System.out.println("Algo errado, tente novamente!");
+                excecoes = 1;
+                sn.nextLine();
+            }
+        } while (excecoes != 0);
+        listaClientes = Cliente.getClientes();
+        for (Cliente c : listaClientes) {
+            if (getId() == c.getId()) {
+                {
+                    saldoCliente = c.getSaldo();
+                }
+                setSaldo(valorDeposito + saldoCliente);
+            }
 
+            String sql = "UPDATE cliente SET "
+                    + " saldo = " + getSaldo() + " "
+                    + " WHERE id = " + getId();
+
+            Conexao.executar(sql);
+        }
+
+    }
+
+    public void comprarProduto() {
+        float valorProduto = 0;
+        int idProduto = 0;
+        produto = new Produto();
+        produto.listarProdutos();
+        System.out.println("Digite o codigo do produto que você quer comprar: ");
+        codigo = sn.nextInt();
+        listaProdutos = Produto.getProdutos();
+        for (Produto p : listaProdutos) {
+            if (codigo == p.getCodigo()) {
+                valorProduto = p.getPreco();
+                idProduto = p.getCodigo();
+
+            } else {
+                System.out.println("Id invalido.");
+            }
+        }
+        setSaldo(getSaldo() - valorProduto);
         String sql = "UPDATE cliente SET "
                 + " saldo = " + getSaldo() + " "
                 + " WHERE id = " + getId();
 
         Conexao.executar(sql);
+        System.out.println(valorProduto);
     }
 
 }

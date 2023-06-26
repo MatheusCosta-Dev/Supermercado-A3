@@ -1,24 +1,41 @@
 package supermercado;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Produto {
-    ArrayList<Produto> listarProduto = new ArrayList();
-    //Scanners
+    ArrayList<Produto> listarProdutos = new ArrayList();
+    // Scanners
     Scanner ss = new Scanner(System.in);
     Scanner sn = new Scanner(System.in);
-    
-    //Atributos
+
+    // Atributos
     private String nome;
-    private int codigo, idCategoria, idFuncionario;
+    private int codigo, idCategoria, idFuncionario, id_categoria, quantidade_estoque;
     private Categoria categoria;
     private float preco;
-    
-    //Geters e Seters
+    private Produto produto;
+
+    // Geters e Seters
+
     public int getCodigo() {
         return codigo;
     }
+
+    
+
+    public int getQuantidade_estoque() {
+        return quantidade_estoque;
+    }
+
+
+
+    public void setQuantidade_estoque(int quantidade_estoque) {
+        this.quantidade_estoque = quantidade_estoque;
+    }
+
+
 
     public void setCodigo(int codigo) {
         this.codigo = codigo;
@@ -56,48 +73,44 @@ public class Produto {
         this.idFuncionario = idFuncionario;
     }
 
-
-
-    
-
     // Construtor
-    
-    
 
-    //Métodos 
+    // Métodos
     public void mostrarProdutos() {
         System.out.println("========================");
         System.out.println("Código: " + getCodigo());
         System.out.println("Nome: " + getNome());
         System.out.println("Preço: " + getPreco());
-        
+
     }
 
-    public Produto(String nome, int codigo, float preco) {
-        this.nome = nome;
-        this.codigo = codigo;
-        this.preco = preco;
-    }
-    
-    
     public Produto() {
-        
+
+    }
+
+    public Produto(String nome, float preco, int quantidade_estoque) {
+        this.nome = nome;
+        this.preco = preco;
+        this.quantidade_estoque = quantidade_estoque;
     }
 
     public void cadastrarProduto() {
         categoria = new Categoria();
-        
+
         System.out.print("Escreva o nome do produto: ");
         setNome(ss.nextLine());
         System.out.print("Escreva o preço: ");
         setPreco(sn.nextFloat());
+        System.out.println("Escreva a quantidade:");
+        setQuantidade_estoque(sn.nextInt());
         categoria.listarCategoria();
         System.out.print("Insira a categoria: ");
         setIdCategoria(sn.nextInt());
-        
-        String sql = "INSERT INTO produto (nome, preco, id_categoria, id_funcionario) VALUES ( '"
+
+        String sql = "INSERT INTO produto (nome, preco, quantidade_estoque, id_categoria, id_funcionario) VALUES ( '"
                 + getNome() + "',"
                 + getPreco() + ","
+                + getQuantidade_estoque() + ","
                 + getIdCategoria() + ","
                 + getIdFuncionario() + ")";
 
@@ -105,16 +118,54 @@ public class Produto {
         System.out.println("Produto cadastrado.");
 
     }
-    
-    
-    
-    
-    /*
-    
-    public void editarProduto(){
-        System.out.println("Escreva o nome do produto que deseja alterar: ");
-        String nome = ss.nextLine();
+
+    public void listarProdutos() {
+        listarProdutos = Produto.getProdutos();
+        for (Produto p : listarProdutos) {
+            System.out.println("Nome: " + p.getNome());
+            System.out.println("Valor: " + p.getPreco());
+            System.out.println("Id: " + p.getCodigo());
+        }
+
     }
-    
-    */
+
+    public static ArrayList<Produto> getProdutos() {
+        ArrayList<Produto> lista = new ArrayList<>();
+
+        String sql = "SELECT id, nome, preco, quantidade_estoque FROM produto ORDER BY nome";
+
+        ResultSet rs = Conexao.consultar(sql);
+
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    String nome = rs.getString(2);
+                    Float preco = rs.getFloat(3);
+                    int quantidade_estoque = rs.getInt(4);
+
+                    Produto produto = new Produto(nome, preco, quantidade_estoque);
+                    produto.setCodigo(rs.getInt(1));
+                    lista.add(produto);
+                }
+            } catch (Exception e) {
+                System.out.println("==>" + e);
+            }
+        }
+
+        return lista;
+    }
+
+    public void comprar(int codigo) {
+        String sql = "DELETE FROM produto WHERE id = " + getCodigo();
+        Conexao.executar(sql);
+
+    }
+    /*
+     * 
+     * public void editarProduto(){
+     * System.out.println("Escreva o nome do produto que deseja alterar: ");
+     * String nome = ss.nextLine();
+     * }
+     * 
+     */
 }

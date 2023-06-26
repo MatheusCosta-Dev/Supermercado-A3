@@ -127,25 +127,9 @@ public class Supermercado {
                                                     menuCliente = 1;
                                                     break;
                                                 case 2:
-                                                    float valorDeposito = 0;
-                                                    do {
-                                                        try {
-                                                            System.out.print("Quanto voce quer depositar? R$ ");
-                                                            valorDeposito = sn.nextFloat();
-                                                            excecoes = 0;
-                                                        } catch (InputMismatchException ae) {
-                                                            System.out.println("Letra em lugar de numero! ");
-                                                            excecoes = 1;
-                                                            sn.nextLine();
-                                                        } catch (Throwable ime) {
-                                                            System.out.println("Algo errado, tente novamente!");
-                                                            excecoes = 1;
-                                                            sn.nextLine();
-                                                        }
-                                                    } while (excecoes != 0);
-                                                    valorDeposito += saldoCliente;
+                                                    
                                                     cliente = new Cliente();
-                                                    cliente.setSaldo(valorDeposito);
+
                                                     cliente.setId(idCliente);
                                                     cliente.depositar();
                                                     System.out.println("Deposito realizado com sucesso!");
@@ -153,6 +137,10 @@ public class Supermercado {
                                                     menuCliente = 1;
                                                     break;
                                                 case 3:
+                                                    cliente = new Cliente();
+                                                    cliente.setId(idCliente);
+                                                    cliente.setSaldo(saldoCliente);
+                                                    cliente.comprarProduto();
                                                     break;
                                                 case 4:
 
@@ -347,6 +335,8 @@ public class Supermercado {
                                                     produto.cadastrarProduto();
                                                     break;
                                                 case 3:
+                                                    produto = new Produto();
+                                                    produto.listarProdutos();
                                                     break;
                                                 case 4:
 
