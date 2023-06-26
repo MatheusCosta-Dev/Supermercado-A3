@@ -83,6 +83,7 @@ public class Supermercado {
                                     System.out.print("Digite sua senha: ");
                                     String veriSenha = ss.nextLine();
 
+                                    //Verificar clientes já cadastrados
                                     listaClientes = Cliente.getClientes();
                                     for (Cliente c : listaClientes) {
                                         if (veriEmail.equals(c.getEmail()) && veriSenha.equals(c.getSenha())) {
@@ -118,6 +119,7 @@ public class Supermercado {
 
                                             switch (opcaoMenu) {
                                                 case 1:
+                                                    
                                                     listaClientes = Cliente.getClientes();
                                                     for (Cliente c : listaClientes) {
                                                         if (idCliente == c.getId()) {
@@ -139,7 +141,6 @@ public class Supermercado {
                                                 case 3:
                                                     cliente = new Cliente();
                                                     cliente.setId(idCliente);
-                                                    cliente.setSaldo(saldoCliente);
                                                     cliente.comprarProduto();
                                                     break;
                                                 case 4:

@@ -10,8 +10,6 @@ public class Cliente extends Pessoa implements MostrarDados {
     Scanner sn = new Scanner(System.in);
     Scanner ss = new Scanner(System.in);
 
-    ArrayList<Produto> listaProdutos = new ArrayList();
-
     // Atributos
     private float saldo;
     private Cliente cliente;
@@ -184,6 +182,7 @@ public class Cliente extends Pessoa implements MostrarDados {
 
     }
 
+    // Método para buscar dados do banco
     public static ArrayList<Cliente> getClientes() {
         ArrayList<Cliente> lista = new ArrayList<>();
 
@@ -234,7 +233,7 @@ public class Cliente extends Pessoa implements MostrarDados {
     public void depositar() {
         ArrayList<Cliente> listaClientes = new ArrayList();
         float saldoCliente, valorDeposito = 0;
-        
+
         int excecoes = 0;
         do {
             try {
@@ -254,9 +253,7 @@ public class Cliente extends Pessoa implements MostrarDados {
         listaClientes = Cliente.getClientes();
         for (Cliente c : listaClientes) {
             if (getId() == c.getId()) {
-                {
-                    saldoCliente = c.getSaldo();
-                }
+                saldoCliente = c.getSaldo();
                 setSaldo(valorDeposito + saldoCliente);
             }
 
@@ -270,29 +267,67 @@ public class Cliente extends Pessoa implements MostrarDados {
     }
 
     public void comprarProduto() {
-        float valorProduto = 0;
-        int idProduto = 0;
-        produto = new Produto();
-        produto.listarProdutos();
-        System.out.println("Digite o codigo do produto que você quer comprar: ");
-        codigo = sn.nextInt();
-        listaProdutos = Produto.getProdutos();
-        for (Produto p : listaProdutos) {
-            if (codigo == p.getCodigo()) {
-                valorProduto = p.getPreco();
-                idProduto = p.getCodigo();
+        ArrayList<Produto> listaProdutos = new ArrayList();
+        ArrayList<Cliente> listaClientes = new ArrayList();
 
-            } else {
-                System.out.println("Id invalido.");
+        float precoProduto  = 0 , saldoCliente = 0;
+        int excecoes = 0, idPedido = 0, qtdProdutos = 0;
+        produto = new Produto();
+
+        produto.listarProdutos();
+
+        do {
+            try {
+                System.out.print("Qual o ID do pedido que você quer comprar?  ");
+                idPedido = sn.nextInt();
+                excecoes = 0;
+            } catch (InputMismatchException ae) {
+                System.out.println("Letra em lugar de numero! ");
+                excecoes = 1;
+                sn.nextLine();
+            } catch (Throwable ime) {
+                System.out.println("Algo errado, tente novamente!");
+                excecoes = 1;
+                sn.nextLine();
+            }
+        } while (excecoes != 0);
+
+        listaClientes = Cliente.getClientes();
+        for (Cliente c : listaClientes) {
+            if (getId() == c.getId()) {
+                saldoCliente = c.getSaldo();
             }
         }
-        setSaldo(getSaldo() - valorProduto);
+
+        listaProdutos = Produto.getProdutos();
+        for (Produto p : listaProdutos) {
+            if (idPedido == p.getCodigo()) {
+                precoProduto = p.getPreco();
+                qtdProdutos = p.getQuantidade_estoque();
+            }
+        }
+        if (qtdProdutos > 0 && precoProduto < saldoCliente){
+        setSaldo(saldoCliente - precoProduto );
+        qtdProdutos = qtdProdutos - 1;
+
         String sql = "UPDATE cliente SET "
-                + " saldo = " + getSaldo() + " "
-                + " WHERE id = " + getId();
+                    + " saldo = " + getSaldo() + " "
+                    + " WHERE id = " + getId();
 
         Conexao.executar(sql);
-        System.out.println(valorProduto);
-    }
 
+        String sql2 = "UPDATE produto SET "
+                    + " quantidade_estoque = " + qtdProdutos + " "
+                    + " WHERE id = " + getId();
+
+        Conexao.executar(sql2);
+            System.out.println("Pedido comprado.");
+
+        }else if(precoProduto > saldoCliente){
+            System.out.println("Você não tem saldo suficiente!");
+        }
+        else{
+            System.out.println("Produto sem estoque no momento.");
+        }
+    }
 }
