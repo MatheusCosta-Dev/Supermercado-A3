@@ -1,18 +1,19 @@
 package supermercado;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Produto {
-    
+    ArrayList<Produto> listarProduto = new ArrayList();
     //Scanners
     Scanner ss = new Scanner(System.in);
     Scanner sn = new Scanner(System.in);
     
     //Atributos
     private String nome;
-    private int codigo;
-    private float preco;
+    private int codigo, idCategoria, idFuncionario;
     private Categoria categoria;
+    private float preco;
     
     //Geters e Seters
     public int getCodigo() {
@@ -39,6 +40,24 @@ public class Produto {
         this.preco = preco;
     }
 
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
+    public int getIdFuncionario() {
+        return idFuncionario;
+    }
+
+    public void setIdFuncionario(int idFuncionario) {
+        this.idFuncionario = idFuncionario;
+    }
+
+
+
     
 
     // Construtor
@@ -59,19 +78,37 @@ public class Produto {
         this.codigo = codigo;
         this.preco = preco;
     }
+    
+    
+    public Produto() {
+        
+    }
 
     public void cadastrarProduto() {
+        categoria = new Categoria();
+        
         System.out.print("Escreva o nome do produto: ");
         setNome(ss.nextLine());
         System.out.print("Escreva o preço: ");
         setPreco(sn.nextFloat());
+        categoria.listarCategoria();
+        System.out.print("Insira a categoria: ");
+        setIdCategoria(sn.nextInt());
         
-        
-        
-        System.out.print("Escreva o id da categoria: ");
-        
+        String sql = "INSERT INTO produto (nome, preco, id_categoria, id_funcionario) VALUES ( '"
+                + getNome() + "',"
+                + getPreco() + ","
+                + getIdCategoria() + ","
+                + getIdFuncionario() + ")";
+
+        Conexao.executar(sql);
+        System.out.println("Produto cadastrado.");
 
     }
+    
+    
+    
+    
     /*
     
     public void editarProduto(){

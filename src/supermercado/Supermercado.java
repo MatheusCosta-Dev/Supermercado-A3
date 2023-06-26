@@ -22,6 +22,8 @@ public class Supermercado {
                 opcaoMenuFuncionario = 0;
         Cliente cliente;
         Funcionario funcionario;
+        Categoria categoria;
+        Produto produto;
         boolean loginSucesso = false, voltarAoMenu = false;
 
         do { // Menu principal
@@ -337,9 +339,12 @@ public class Supermercado {
                                                     }
                                                     menuFuncionario = 1;
                                                     break;
-                                                // vai toma no cu
                                                 case 2:
-                                                    System.out.println("");
+                                                    produto = new Produto();
+                                                    categoria = new Categoria();
+                                                    funcionario = new Funcionario();
+                                                    produto.setIdFuncionario(idFuncionario);
+                                                    produto.cadastrarProduto();
                                                     break;
                                                 case 3:
                                                     break;
@@ -390,8 +395,8 @@ public class Supermercado {
                                                             funcionario.editarEndereco();
                                                             break;
                                                         case 5:
-                                                            cliente = new Cliente();
-                                                            cliente.setId(idCliente);
+                                                            funcionario = new Funcionario();
+                                                            funcionario.setId(idFuncionario);
 
                                                             boolean opcaoValida = false;
 
@@ -401,9 +406,9 @@ public class Supermercado {
                                                                 String opcaoExcluir = ss.nextLine();
 
                                                                 if (opcaoExcluir.equalsIgnoreCase("S")) {
-                                                                    cliente.excluir(idCliente);
+                                                                    funcionario.excluir(idFuncionario);
                                                                     System.out.println("Excluído com sucesso!");
-                                                                    menuCliente = 0;
+                                                                    menuFuncionario = 0;
                                                                     menuPrincipal = 0;
                                                                     painelPrincipal = 0;
                                                                     opcaoValida = true;
@@ -432,6 +437,12 @@ public class Supermercado {
 
                                                     break;
                                                 case 5:
+                                                    categoria = new Categoria();
+                                                    funcionario = new Funcionario();
+                                                    categoria.setIdFuncionario(idFuncionario);
+                                                    categoria.cadastrarCategoria();
+                                                break;
+                                                case 6:
                                                     menuFuncionario = 0;
                                                     menuPrincipal = 0;
                                                     painelFuncionario = 0;
