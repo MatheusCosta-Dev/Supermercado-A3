@@ -271,7 +271,7 @@ public class Cliente extends Pessoa implements MostrarDados {
         ArrayList<Cliente> listaClientes = new ArrayList();
 
         float precoProduto  = 0 , saldoCliente = 0;
-        int excecoes = 0, idPedido = 0, qtdProdutos = 0;
+        int excecoes = 0, idPedido = 0, qtdProdutos = 0, idProduto=0;
         produto = new Produto();
 
         produto.listarProdutos();
@@ -302,6 +302,7 @@ public class Cliente extends Pessoa implements MostrarDados {
         listaProdutos = Produto.getProdutos();
         for (Produto p : listaProdutos) {
             if (idPedido == p.getCodigo()) {
+                idProduto = p.getCodigo();
                 precoProduto = p.getPreco();
                 qtdProdutos = p.getQuantidade_estoque();
             }
@@ -309,6 +310,7 @@ public class Cliente extends Pessoa implements MostrarDados {
         if (qtdProdutos > 0 && precoProduto < saldoCliente){
         setSaldo(saldoCliente - precoProduto );
         qtdProdutos = qtdProdutos - 1;
+        System.out.println(qtdProdutos);
 
         String sql = "UPDATE cliente SET "
                     + " saldo = " + getSaldo() + " "
@@ -318,7 +320,7 @@ public class Cliente extends Pessoa implements MostrarDados {
 
         String sql2 = "UPDATE produto SET "
                     + " quantidade_estoque = " + qtdProdutos + " "
-                    + " WHERE id = " + getId();
+                    + " WHERE id = " + idProduto;
 
         Conexao.executar(sql2);
             System.out.println("Pedido comprado.");
