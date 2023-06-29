@@ -2,6 +2,7 @@ package supermercado;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Produto {
@@ -23,19 +24,13 @@ public class Produto {
         return codigo;
     }
 
-    
-
     public int getQuantidade_estoque() {
         return quantidade_estoque;
     }
 
-
-
     public void setQuantidade_estoque(int quantidade_estoque) {
         this.quantidade_estoque = quantidade_estoque;
     }
-
-
 
     public void setCodigo(int codigo) {
         this.codigo = codigo;
@@ -96,11 +91,36 @@ public class Produto {
 
     public void cadastrarProduto() {
         categoria = new Categoria();
+        int excecoes = 0;
+        float precoProduto = 0;
 
         System.out.print("Escreva o nome do produto: ");
         setNome(ss.nextLine());
-        System.out.print("Escreva o preço: ");
-        setPreco(sn.nextFloat());
+
+        do {
+            try {
+                System.out.print("Digite o preço: ");
+                precoProduto = sn.nextFloat();
+                if (precoProduto < 0) {
+                    System.out.println("Valor inserido é um valor negativo, ponha um valor valido {0, infinito}");
+                    excecoes = 1;
+                } else {
+                    setPreco(precoProduto);
+                    excecoes = 0;
+                }
+
+            } catch (InputMismatchException ae) {
+                System.out.println("Letra em lugar de numero! ");
+                excecoes = 1;
+                sn.nextLine();
+            } catch (Throwable ime) {
+                System.out.println("Algo errado, tente novamente!");
+                excecoes = 1;
+                sn.nextLine();
+            }
+
+        } while (excecoes != 0);
+
         System.out.println("Escreva a quantidade:");
         setQuantidade_estoque(sn.nextInt());
         categoria.listarCategoria();
@@ -122,6 +142,7 @@ public class Produto {
     public void listarProdutos() {
         listarProdutos = Produto.getProdutos();
         for (Produto p : listarProdutos) {
+            System.out.println("====================");
             System.out.println("Nome: " + p.getNome());
             System.out.println("Valor: " + p.getPreco());
             System.out.println("Id: " + p.getCodigo());
@@ -160,12 +181,107 @@ public class Produto {
         Conexao.executar(sql);
 
     }
-    /*
-     * 
-     * public void editarProduto(){
-     * System.out.println("Escreva o nome do produto que deseja alterar: ");
-     * String nome = ss.nextLine();
-     * }
-     * 
-     */
+
+    public void editarValor() {
+        int excecoes, idProduto;
+        float novoPreco;
+        produto = new Produto();
+        produto.listarProdutos();
+
+        do {
+            try {
+                System.out.print("Escreva o id do produto que você quer alterar o valor: ");
+                idProduto = sn.nextInt();
+                if (idProduto < 1) {
+                    System.out.println("ID invalido.");
+                    excecoes = 1;
+                } else {
+                    setCodigo(idProduto);
+                    excecoes = 0;
+                }
+
+                
+            } catch (InputMismatchException ae) {
+                System.out.println("Letra em lugar de numero! ");
+                excecoes = 1;
+                sn.nextLine();
+            } catch (Throwable ime) {
+                System.out.println("Algo errado, tente novamente!");
+                excecoes = 1;
+                sn.nextLine();
+            }
+        } while (excecoes != 0);
+
+        do {
+            try {
+                System.out.print("Digite qual o novo valor do produto: R$ ");
+                novoPreco = sn.nextFloat();
+                
+                if (novoPreco < 0){
+                    System.out.println("Valor digitado invalido.");
+                    excecoes = 1;
+                } else {
+                    setPreco(novoPreco);
+                    excecoes = 0;
+                }
+                
+            } catch (InputMismatchException ae) {
+                System.out.println("Letra em lugar de numero! ");
+                excecoes = 1;
+                sn.nextLine();
+            } catch (Throwable ime) {
+                System.out.print("Algo errado, tente novamente!");
+                excecoes = 1;
+                sn.nextLine();
+            }
+        } while (excecoes != 0);
+
+        String sql2 = "UPDATE produto SET "
+                + " preco = " + getPreco() + " "
+                + " WHERE id = " + getCodigo();
+
+        Conexao.executar(sql2);
+        System.out.print("O valor foi alterado com sucesso.");
+    }
+
+    public void editarNome() {
+        int excecoes, idProduto;
+
+        produto = new Produto();
+        produto.listarProdutos();
+        do {
+            try {
+                System.out.print("Escreva o id do produto que você quer alterar o nome: ");
+                idProduto = sn.nextInt();
+                if (idProduto < 1) {
+                    System.out.println("ID invalido.");
+                    excecoes = 1;
+                } else {
+                    setCodigo(idProduto);
+                    excecoes = 0;
+                }
+
+                
+            } catch (InputMismatchException ae) {
+                System.out.println("Letra em lugar de numero! ");
+                excecoes = 1;
+                sn.nextLine();
+            } catch (Throwable ime) {
+                System.out.println("Algo errado, tente novamente!");
+                excecoes = 1;
+                sn.nextLine();
+            }
+        } while (excecoes != 0);
+
+        System.out.print("Digite o novo nome do produto:");
+        setNome(ss.nextLine());
+
+        String sql2 = "UPDATE produto SET "
+                + " nome = '" + getNome() + "' "
+                + " WHERE id = " + getCodigo();
+
+        Conexao.executar(sql2);
+        System.out.print("O nome do produto foi alterado com sucesso.");
+    }
+
 }

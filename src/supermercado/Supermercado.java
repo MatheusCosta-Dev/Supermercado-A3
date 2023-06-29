@@ -67,9 +67,12 @@ public class Supermercado {
                                 excecoes = 1;
                                 sn.nextLine();
                             }
-                            if (opcaoMenu == 1 || opcaoMenu == 2) {
+
+                            if (opcaoMenuCliente == 1 || opcaoMenuCliente == 2) {
+
                                 excecoes = 0;
                             } else {
+                                System.out.println("Opção invalida!");
                                 excecoes = 1;
                             }
                         } while (excecoes != 0);
@@ -83,7 +86,7 @@ public class Supermercado {
                                     System.out.print("Digite sua senha: ");
                                     String veriSenha = ss.nextLine();
 
-                                    //Verificar clientes já cadastrados
+                                    // Verificar clientes já cadastrados
                                     listaClientes = Cliente.getClientes();
                                     for (Cliente c : listaClientes) {
                                         if (veriEmail.equals(c.getEmail()) && veriSenha.equals(c.getSenha())) {
@@ -119,7 +122,7 @@ public class Supermercado {
 
                                             switch (opcaoMenu) {
                                                 case 1:
-                                                    
+
                                                     listaClientes = Cliente.getClientes();
                                                     for (Cliente c : listaClientes) {
                                                         if (idCliente == c.getId()) {
@@ -129,7 +132,7 @@ public class Supermercado {
                                                     menuCliente = 1;
                                                     break;
                                                 case 2:
-                                                    
+
                                                     cliente = new Cliente();
 
                                                     cliente.setId(idCliente);
@@ -151,6 +154,7 @@ public class Supermercado {
                                                     System.out.println("[3] Editar Telefone");
                                                     System.out.println("[4] Editar Endereço");
                                                     System.out.println("[5] Excluir");
+                                                    System.out.println("[6] Voltar");
                                                     do {
                                                         try {
                                                             editCliente = sn.nextInt();
@@ -216,11 +220,14 @@ public class Supermercado {
                                                                 } else {
                                                                     System.out.println(
                                                                             "Opção inválida. Por favor, digite S ou N.");
-                                                                    opcaoValida = false; // Mantém a opção como inválida
-                                                                                         // e repete o loop
+                                                                    opcaoValida = false;
                                                                 }
                                                             } while (!opcaoValida);
 
+                                                            break;
+                                                        case 6:
+                                                            System.out.println("Voltando...");
+                                                            menuCliente = 1;
                                                             break;
                                                         default:
                                                             System.out.println("Opçao invalida.");
@@ -301,11 +308,10 @@ public class Supermercado {
                                             try {
                                                 System.out.println("\n\n====== MENU FUNCIONARIO ======");
                                                 System.out.println("[1] Mostrar Dados");
-                                                System.out.println("[2] Cadastrar Produto");
-                                                System.out.println("[3] Mostrar Produtos");
-                                                System.out.println("[4] Editar Perfil");
-                                                System.out.println("[5] Criar categoria de produtos");
-                                                System.out.println("[6] Fechar Painel");
+                                                System.out.println("[2] Produto");
+                                                System.out.println("[3] Editar Perfil");
+                                                System.out.println("[4] Categoria");
+                                                System.out.println("[5] Fechar Painel");
                                                 opcaoMenu = sn.nextInt();
                                                 excecoes = 0;
                                             } catch (InputMismatchException ae) {
@@ -329,17 +335,60 @@ public class Supermercado {
                                                     menuFuncionario = 1;
                                                     break;
                                                 case 2:
-                                                    produto = new Produto();
-                                                    categoria = new Categoria();
-                                                    funcionario = new Funcionario();
-                                                    produto.setIdFuncionario(idFuncionario);
-                                                    produto.cadastrarProduto();
+                                                    System.out.println("===== MENU PRODUTOS =====");
+                                                    System.out.println("[1]  Cadastrar produto");
+                                                    System.out.println("[2]  Mostrar Produtos");
+                                                    System.out.println("[3]  Editar nome do produto");
+                                                    System.out.println("[4]  Editar valor do produto");
+                                                    System.out.println("[5]  Voltar");
+
+                                                    do {
+                                                        try {
+                                                            opcaoMenu = sn.nextInt();
+                                                            excecoes = 0;
+                                                        } catch (InputMismatchException ae) {
+                                                            System.out.println("Letra em lugar de numero! ");
+                                                            excecoes = 1;
+                                                            sn.nextLine();
+                                                        } catch (Throwable ime) {
+                                                            System.out.println("Algo errado, tente novamente!");
+                                                            excecoes = 1;
+                                                            sn.nextLine();
+                                                        }
+                                                    } while (excecoes != 0);
+
+                                                    switch (opcaoMenu) {
+                                                        case 1:
+                                                            produto = new Produto();
+                                                            categoria = new Categoria();
+                                                            funcionario = new Funcionario();
+                                                            produto.setIdFuncionario(idFuncionario);
+                                                            produto.cadastrarProduto();
+                                                            break;
+                                                        case 2:
+                                                            produto = new Produto();
+                                                            produto.listarProdutos();
+                                                            menuFuncionario = 1;
+                                                            break;
+                                                        case 3:
+                                                            produto = new Produto();
+                                                            produto.editarNome();
+                                                            menuFuncionario = 1;
+                                                            break;
+                                                        case 4:
+                                                            produto = new Produto();
+                                                            produto.editarValor();
+                                                            menuFuncionario = 1;
+                                                            break;
+                                                        case 5:
+                                                            menuFuncionario = 1;
+                                                            System.out.println("Voltando...");
+                                                            break;
+
+                                                    }
+
                                                     break;
                                                 case 3:
-                                                    produto = new Produto();
-                                                    produto.listarProdutos();
-                                                    break;
-                                                case 4:
 
                                                     System.out.println("====== Editando Perfil ======");
                                                     System.out.println("[1] Editar Nome");
@@ -347,6 +396,7 @@ public class Supermercado {
                                                     System.out.println("[3] Editar Telefone");
                                                     System.out.println("[4] Editar Endereço");
                                                     System.out.println("[5] Excluir");
+                                                    System.out.println("[6] Voltar");
                                                     do {
                                                         try {
                                                             editFuncionario = sn.nextInt();
@@ -403,23 +453,24 @@ public class Supermercado {
                                                                     menuPrincipal = 0;
                                                                     painelPrincipal = 0;
                                                                     opcaoValida = true;
-                                                                    voltarAoMenu = true; // Define que o usuário deseja
-                                                                                         // voltar ao menu de edição
+                                                                    voltarAoMenu = true;
                                                                 } else if (opcaoExcluir.equalsIgnoreCase("N")) {
                                                                     System.out.println(
                                                                             "Fique tranquilo, não foi excluído!");
                                                                     menuPrincipal = 0;
                                                                     painelPrincipal = 0;
                                                                     opcaoValida = true;
-                                                                    voltarAoMenu = true; // Define que o usuário deseja
-                                                                                         // voltar ao menu de edição
+                                                                    voltarAoMenu = true;
                                                                 } else {
                                                                     System.out.println(
                                                                             "Opção inválida. Por favor, digite S ou N.");
-                                                                    opcaoValida = false; // Mantém a opção como inválida
-                                                                                         // e repete o loop
+                                                                    opcaoValida = false;
                                                                 }
                                                             } while (!opcaoValida);
+                                                            break;
+                                                        case 6:
+                                                            menuFuncionario = 1;
+                                                            System.out.println("Voltando...");
                                                             break;
                                                         default:
                                                             System.out.println("Opçao invalida.");
@@ -427,16 +478,63 @@ public class Supermercado {
                                                     }
 
                                                     break;
+                                                case 4:
+                                                    int menuCategoria = 0;
+                                                    System.out.println("===== CATEGORIA =====");
+                                                    System.out.println("[1] Criar categoria");
+                                                    System.out.println("[2] Editar nome de categoria");
+                                                    System.out.println("[3] Mostrar categorias");
+                                                    System.out.println("[4] Voltar");
+
+                                                    do {
+                                                        try {
+                                                            menuCategoria = sn.nextInt();
+                                                            if (menuCategoria < 0) {
+                                                                System.out.println("Valor digita invalido.");
+                                                                excecoes = 1;
+                                                            } else {
+                                                                excecoes = 0;
+                                                            }
+
+                                                        } catch (InputMismatchException ae) {
+                                                            System.out.println("Letra em lugar de numero! ");
+                                                            excecoes = 1;
+                                                            sn.nextLine();
+                                                        } catch (Throwable ime) {
+                                                            System.out.println("Algo errado, tente novamente!");
+                                                            excecoes = 1;
+                                                            sn.nextLine();
+                                                        }
+                                                    } while (excecoes != 0);
+
+                                                    switch (menuCategoria) {
+                                                        case 1:
+                                                            categoria = new Categoria();
+                                                            funcionario = new Funcionario();
+                                                            categoria.setIdFuncionario(idFuncionario);
+                                                            categoria.cadastrarCategoria();
+                                                            break;
+                                                        case 2:
+                                                            categoria = new Categoria();
+                                                            categoria.editarNome();
+                                                            break;
+                                                        case 3:
+                                                            categoria = new Categoria();
+                                                            categoria.listarCategoria();
+                                                            break;
+                                                        case 4:
+                                                            System.out.println("Voltando...");
+                                                            menuFuncionario = 1;
+                                                            break;
+                                                        default:
+                                                            System.out.println("Opção invalida.");
+                                                            break;
+                                                    }
+                                                    break;
                                                 case 5:
-                                                    categoria = new Categoria();
-                                                    funcionario = new Funcionario();
-                                                    categoria.setIdFuncionario(idFuncionario);
-                                                    categoria.cadastrarCategoria();
-                                                break;
-                                                case 6:
                                                     menuFuncionario = 0;
+                                                    painelPrincipal = 0;
                                                     menuPrincipal = 0;
-                                                    painelFuncionario = 0;
                                                     break;
                                                 default:
                                                     break;

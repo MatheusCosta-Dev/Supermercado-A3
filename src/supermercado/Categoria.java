@@ -2,6 +2,7 @@ package supermercado;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Categoria {
@@ -9,8 +10,11 @@ public class Categoria {
     ArrayList<Categoria> listaCategorias = new ArrayList();
 
     Scanner ss = new Scanner(System.in);
+    Scanner sn = new Scanner(System.in);
+
     private String nome;
     private int id, idFuncionario;
+    private Categoria categoria;
 
     public String getNome() {
         return nome;
@@ -60,6 +64,7 @@ public class Categoria {
     public void listarCategoria() {
         listaCategorias = Categoria.getCategoria();
         for (Categoria c : listaCategorias) {
+            System.out.println("=======================");
             System.out.println("nome: " + c.getNome());
             System.out.println("Id: " + c.getId());
         }
@@ -88,6 +93,46 @@ public class Categoria {
         } 
 
         return lista;
+    }
+
+    public void editarNome() {
+        int excecoes, idCategoria;
+
+        categoria = new Categoria();
+        categoria.listarCategoria();
+        do {
+            try {
+                System.out.print("Escreva o id da categoria que você quer alterar o nome: ");
+                idCategoria = sn.nextInt();
+                if (idCategoria < 1) {
+                    System.out.println("ID invalido.");
+                    excecoes = 1;
+                } else {
+                    setId(idCategoria);
+                    excecoes = 0;
+                }
+
+                
+            } catch (InputMismatchException ae) {
+                System.out.println("Letra em lugar de numero! ");
+                excecoes = 1;
+                sn.nextLine();
+            } catch (Throwable ime) {
+                System.out.println("Algo errado, tente novamente!");
+                excecoes = 1;
+                sn.nextLine();
+            }
+        } while (excecoes != 0);
+
+        System.out.print("Digite o novo nome da categoria:");
+        setNome(ss.nextLine());
+
+        String sql2 = "UPDATE categoria SET "
+                + " nome = '" + getNome() + "' "
+                + " WHERE id = " + getId();
+
+        Conexao.executar(sql2);
+        System.out.print("O nome da categoria foi alterado com sucesso.");
     }
 
 }

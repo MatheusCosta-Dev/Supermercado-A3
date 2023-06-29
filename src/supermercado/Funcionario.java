@@ -36,6 +36,7 @@ public class Funcionario extends Pessoa implements MostrarDados{
     // Cadastrando no banco de dados
     public void cadastrar() {
         int excecoes = 0;
+        float salarioFuncionario;
 
         System.out.println("CADASTRO FUNCIONARIO");
         System.out.print("Digite o seu nome: ");
@@ -59,9 +60,16 @@ public class Funcionario extends Pessoa implements MostrarDados{
 
         do {
             try {
-                System.out.print("Digite o saldo: ");
-                setSalario(sn.nextFloat());
-                excecoes = 0;
+                System.out.print("Digite o salario: R$ ");
+                salarioFuncionario = sn.nextFloat();
+                if (salarioFuncionario < 0) {
+                    System.out.println("Valor inserido é um valor negativo, ponha um valor valido {0, infinito}");
+                    excecoes = 1;
+                }else {
+                    setSalario(salarioFuncionario);
+                    excecoes = 0;
+                }
+                
             } catch (InputMismatchException ae) {
                 System.out.println("Letra em lugar de numero! ");
                 excecoes = 1;
@@ -209,6 +217,7 @@ public class Funcionario extends Pessoa implements MostrarDados{
 
     @Override
     public void mostrarDados() {
+        System.out.println("======== DADOS ========");
         System.out.println("Nome: " + getNome());
         System.out.println("Email: " + getEmail());
         System.out.println("Cpf: " + getCpf());
@@ -218,7 +227,7 @@ public class Funcionario extends Pessoa implements MostrarDados{
         System.out.println("Cidade: " + getCidade());
         System.out.println("Cep: " + getCep());
         System.out.println("Salario: R$" + getSalario());
-
+        System.out.println("========================");
     }
 
 }

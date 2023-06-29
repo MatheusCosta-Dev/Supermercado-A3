@@ -45,6 +45,8 @@ public class Cliente extends Pessoa implements MostrarDados {
     public void cadastrar() {
         int excecoes = 0;
 
+        float saldoCliente;
+
         System.out.println("CADASTRO CLIENTE");
         System.out.print("Digite o seu nome: ");
         setNome(ss.nextLine());
@@ -67,9 +69,16 @@ public class Cliente extends Pessoa implements MostrarDados {
 
         do {
             try {
-                System.out.print("Digite o saldo: ");
-                setSaldo(sn.nextFloat());
-                excecoes = 0;
+                System.out.print("Digite o saldo: R$ ");
+                saldoCliente = sn.nextFloat();
+                if (saldoCliente < 0) {
+                    System.out.println("Valor inserido é um valor negativo, ponha um valor valido {0, infinito}");
+                    excecoes = 1;
+                } else {
+                    setSaldo(saldoCliente);
+                    excecoes = 0;
+                }
+
             } catch (InputMismatchException ae) {
                 System.out.println("Letra em lugar de numero! ");
                 excecoes = 1;
@@ -79,6 +88,7 @@ public class Cliente extends Pessoa implements MostrarDados {
                 excecoes = 1;
                 sn.nextLine();
             }
+
         } while (excecoes != 0);
         cliente = new Cliente(getNome(), getEmail(), getSenha(), getCpf(), getTelefone(), getRua(), getBairro(),
                 getCidade(), getCep(), getSaldo());
@@ -218,6 +228,7 @@ public class Cliente extends Pessoa implements MostrarDados {
 
     @Override
     public void mostrarDados() {
+        System.out.println("====== DADOS ======");
         System.out.println("Nome: " + getNome());
         System.out.println("Email: " + getEmail());
         System.out.println("Cpf: " + getCpf());
@@ -227,6 +238,7 @@ public class Cliente extends Pessoa implements MostrarDados {
         System.out.println("Cidade: " + getCidade());
         System.out.println("Cep: " + getCep());
         System.out.println("Saldo: R$" + getSaldo());
+        System.out.println("===================");
 
     }
 
@@ -237,11 +249,17 @@ public class Cliente extends Pessoa implements MostrarDados {
         int excecoes = 0;
         do {
             try {
-                System.out.print("Quanto voce quer depositar? R$ ");
+                System.out.print("Quanto você quer depositar? R$ ");
                 valorDeposito = sn.nextFloat();
-                excecoes = 0;
+                if (valorDeposito < 0) {
+                    System.out.println("Digite um valor valido!");
+                    excecoes = 1;
+                } else {
+                    excecoes = 0;
+                }
+
             } catch (InputMismatchException ae) {
-                System.out.println("Letra em lugar de numero! ");
+                System.out.println("Letra em lugar de número! ");
                 excecoes = 1;
                 sn.nextLine();
             } catch (Throwable ime) {
@@ -270,8 +288,8 @@ public class Cliente extends Pessoa implements MostrarDados {
         ArrayList<Produto> listaProdutos = new ArrayList();
         ArrayList<Cliente> listaClientes = new ArrayList();
 
-        float precoProduto  = 0 , saldoCliente = 0;
-        int excecoes = 0, idPedido = 0, qtdProdutos = 0, idProduto=0;
+        float precoProduto = 0, saldoCliente = 0;
+        int excecoes = 0, idPedido = 0, qtdProdutos = 0, idProduto = 0;
         produto = new Produto();
 
         produto.listarProdutos();
@@ -280,7 +298,13 @@ public class Cliente extends Pessoa implements MostrarDados {
             try {
                 System.out.print("Qual o ID do pedido que você quer comprar?  ");
                 idPedido = sn.nextInt();
-                excecoes = 0;
+                if (idPedido < 1) {
+                    System.out.println("ID invalida.");
+                    excecoes = 1;
+                } else {
+                    excecoes = 0;
+                }
+
             } catch (InputMismatchException ae) {
                 System.out.println("Letra em lugar de numero! ");
                 excecoes = 1;
@@ -307,28 +331,27 @@ public class Cliente extends Pessoa implements MostrarDados {
                 qtdProdutos = p.getQuantidade_estoque();
             }
         }
-        if (qtdProdutos > 0 && precoProduto < saldoCliente){
-        setSaldo(saldoCliente - precoProduto );
-        qtdProdutos = qtdProdutos - 1;
-        System.out.println(qtdProdutos);
+        if (qtdProdutos > 0 && precoProduto < saldoCliente) {
+            setSaldo(saldoCliente - precoProduto);
+            qtdProdutos = qtdProdutos - 1;
+            System.out.println(qtdProdutos);
 
-        String sql = "UPDATE cliente SET "
+            String sql = "UPDATE cliente SET "
                     + " saldo = " + getSaldo() + " "
                     + " WHERE id = " + getId();
 
-        Conexao.executar(sql);
+            Conexao.executar(sql);
 
-        String sql2 = "UPDATE produto SET "
+            String sql2 = "UPDATE produto SET "
                     + " quantidade_estoque = " + qtdProdutos + " "
                     + " WHERE id = " + idProduto;
 
-        Conexao.executar(sql2);
+            Conexao.executar(sql2);
             System.out.println("Pedido comprado.");
 
-        }else if(precoProduto > saldoCliente){
+        } else if (precoProduto > saldoCliente) {
             System.out.println("Você não tem saldo suficiente!");
-        }
-        else{
+        } else {
             System.out.println("Produto sem estoque no momento.");
         }
     }
